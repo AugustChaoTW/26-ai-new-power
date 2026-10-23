@@ -72,7 +72,7 @@ def main() -> None:
 
     print(f"written {OUT}")
     for name, m in per_model.items():
-        print(f"  {name}: pr_auc={m['pr_auc']:.4f} poc_auc={m['roc_auc']:.4f} f1={m['f1']:.4f} acc={m['accuracy']:.4f}")
+        print(f"  {name}: pr_auc={m['pr_auc']:.4f} roc_auc={m['roc_auc']:.4f} f1={m['f1']:.4f} acc={m['accuracy']:.4f}")
 
 
 if __name__ == "__main__":
