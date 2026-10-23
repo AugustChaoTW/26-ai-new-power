@@ -93,3 +93,13 @@ python -m pytest -q
 
 - scikit-learn `load_iris`（原始資料：UCI Machine Learning Repository）
 - Fisher, R. A. (1936). The use of multiple measurements in taxonomic problems.
+
+## AI4I 2020（進行中）
+
+事件單：見 Issue #3（子工作單 #4–#10）。已有成果：
+
+- `data/ai4i2020.csv`：UCI AI4I 2020 Predictive Maintenance Dataset（10,000 筆 × 14 欄位）
+  - 來源：https://archive.ics.uci.edu/dataset/601
+  - DOI：10.24432/C5HS5C；授權：CC BY 4.0
+  - 取得方式：`python ai4i_analysis/data.py`
+- `ai4i_analysis/data.py`：下載、保存、讀取與欄位驗證模組（TDD，`tests/test_ai4i_data.py` 8 個測試）
