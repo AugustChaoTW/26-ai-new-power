@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>互動式推論示範</title>
+  <style>
+    /* 簡潔乾淨的基本樣式（無外部 CDN） */
+    * { box-sizing: border-box; }
+    body {
+      font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      margin: 0;
+      background: #fafafa;
+      color: #222;
+      line-height: 1.5;
+    }
+    main { max-width: 640px; margin: 0 auto; padding: 24px 16px 64px; }
+    h1 { font-size: 1.6rem; margin: 0 0 4px; }
+    .subtitle { color: #666; margin: 0 0 24px; }
+    section.card {
+      background: #f0f0f0;          /* 灰色卡片底 */
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+    section.card h2 { font-size: 1.15rem; margin: 0 0 12px; }
+    .field { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+    .field label { flex: 0 0 150px; font-size: 0.9rem; color: #444; }
+    .field input, .field select {
+      flex: 1; padding: 6px 8px;
+      border: 1px solid #ccc; border-radius: 4px;
+      font-size: 0.95rem; background: #fff;
+    }
+    button {
+      margin-top: 10px; padding: 7px 18px;
+      border: 1px solid #4a7dbd; border-radius: 4px;
+      background: #4a7dbd; color: #fff; font-size: 0.95rem; cursor: pointer;
+    }
+    button:hover { background: #3a67a3; }
+    #result-title { font-size: 1.15rem; margin: 0 0 8px; }
+    #result .error { color: #b00020; margin: 4px 0; }  /* 土磚紅提示 */
+    #result .muted { color: #777; margin: 4px 0; }
+    #result .verdict { font-weight: bold; margin-top: 10px; }
+    #result .verdict.ok { color: #1b7a3d; }
+    #result .verdict.warn { color: #b00020; }
+    .probs { margin-top: 8px; }
+    .probs .prob-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+    .prob-label { flex: 0 0 120px; font-size: 0.9rem; }
+    .prob-bar {
+      flex: 1; height: 14px;
+      background: #d8d8d8; border-radius: 4px; overflow: hidden;
+    }
+    .prob-fill { height: 100%; background: #4a7dbd; }
+    .prob-val {
+      flex: 0 0 72px; text-align: right;
+      font-size: 0.9rem; font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>互動式推論示範</h1>
+    <p class="subtitle"><a href="index.html">← 回分析總覽</a>｜模型參數於 Python（scikit-learn，random_state=42）訓練後直接複製到前端，所有推論皆在瀏覽器本地運算，無後端伺服器。</p>
+
+    <!-- Iris 鳶尾花分類 -->
+    <section class="card">
+      <h2>Iris 鳶尾花分類</h2>
+      <form id="iris-form">
+        <div class="field">
+          <label for="sepal_length">花萼長度(cm)</label>
+          <input type="number" step="0.1" id="sepal_length" name="sepal_length" value="5.1" required>
+        </div>
+        <div class="field">
+          <label for="sepal_width">花萼寬度(cm)</label>
+          <input type="number" step="0.1" id="sepal_width" name="sepal_width" value="3.5" required>
+        </div>
+        <div class="field">
+          <label for="petal_length">花瓣長度(cm)</label>
+          <input type="number" step="0.1" id="petal_length" name="petal_length" value="1.4" required>
+        </div>
+        <div class="field">
+          <label for="petal_width">花瓣寬度(cm)</label>
+          <input type="number" step="0.1" id="petal_width" name="petal_width" value="0.2" required>
+        </div>
+        <button type="submit">預測</button>
+      </form>
+    </section>
+
+    <!-- AI4I 工具機故障預測 -->
+    <section class="card">
+      <h2>AI4I 工具機故障預測</h2>
+      <form id="ai4i-form">
+        <div class="field">
+          <label for="product_type">產品類型</label>
+          <select id="product_type" name="product_type">
+            <option value="H">H</option>
+            <option value="L">L</option>
+            <option value="M" selected>M</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="air_temp">空氣溫度 (K)</label>
+          <input type="number" step="0.1" id="air_temp" name="air_temp" value="298.9" required>
+        </div>
+        <div class="field">
+          <label for="process_temp">製程溫度 (K)</label>
+          <input type="number" step="0.1" id="process_temp" name="process_temp" value="308.9" required>
+        </div>
+        <div class="field">
+          <label for="rot_speed">轉速 (rpm)</label>
+          <input type="number" step="1" id="rot_speed" name="rot_speed" value="1508" required>
+        </div>
+        <div class="field">
+          <label for="torque">扭矩 (Nm)</label>
+          <input type="number" step="0.1" id="torque" name="torque" value="42.8" required>
+        </div>
+        <div class="field">
+          <label for="tool_wear">刀具磨耗 (min)</label>
+          <input type="number" step="1" id="tool_wear" name="tool_wear" value="0" required>
+        </div>
+        <button type="submit">預測</button>
+      </form>
+    </section>
+
+    <!-- 共用結果卡片 -->
+    <section class="card">
+      <h2 id="result-title">推論結果</h2>
+      <div id="result"><p class="muted">請於上方任一表單輸入數值並送出，結果將顯示在此。</p></div>
+    </section>
+  </main>
+
+  <script src="trained_params.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+{
+ "iris": {
+  "source": "reports/paper.md",
+  "metrics": {
+   "Accuracy": {
+    "value": "0.9333",
+    "source": "reports/paper.md §5.2 表格「Accuracy」"
+   },
+   "Precision (macro)": {
+    "value": "0.9333",
+    "source": "reports/paper.md §5.2 表格「Precision (macro)」"
+   },
+   "Recall (macro)": {
+    "value": "0.9333",
+    "source": "reports/paper.md §5.2 表格「Recall (macro)」"
+   },
+   "F1-score (macro)": {
+    "value": "0.9333",
+    "source": "reports/paper.md §5.2 表格「F1-score (macro)」"
+   }
+  },
+  "per_class": {
+   "header": [
+    "類別",
+    "precision",
+    "recall",
+    "f1-score",
+    "support"
+   ],
+   "rows": [
+    [
+     "setosa",
+     "1.0000",
+     "1.0000",
+     "1.0000",
+     "10.0000"
+    ],
+    [
+     "versicolor",
+     "0.9000",
+     "0.9000",
+     "0.9000",
+     "10.0000"
+    ],
+    [
+     "virginica",
+     "0.9000",
+     "0.9000",
+     "0.9000",
+     "10.0000"
+    ]
+   ],
+   "source": "reports/paper.md §5.4 表格"
+  },
+  "class_balance": {
+   "header": [
+    "",
+    "樣本數",
+    "占比"
+   ],
+   "rows": [
+    [
+     "setosa",
+     "50",
+     "33.3%"
+    ],
+    [
+     "versicolor",
+     "50",
+     "33.3%"
+    ],
+    [
+     "virginica",
+     "50",
+     "33.3%"
+    ]
+   ],
+   "source": "reports/paper.md §2.3 表格"
+  },
+  "dataset_checks": {
+   "樣本數": "150",
+   "特徵數": "4",
+   "類別數": "3",
+   "缺值總數": "0",
+   "重複列數": "1",
+   "離群值列數（IQR 法則）": "4"
+  },
+  "dataset_checks_source": "reports/paper.md §3.1 表格",
+  "split": {
+   "header": [
+    "資料集",
+    "樣本數",
+    "setosa",
+    "versicolor",
+    "virginica"
+   ],
+   "rows": [
+    [
+     "訓練集",
+     "120",
+     "40",
+     "40",
+     "40"
+    ],
+    [
+     "測試集",
+     "30",
+     "10",
+     "10",
+     "10"
+    ]
+   ],
+   "source": "reports/paper.md §4.1 表格（random_state = 42 取自 §4.1 內文）"
+  },
+  "model_config": {
+   "隱藏層": {
+    "value": "(16, 8)",
+    "source": "reports/paper.md §4.3 表格"
+   },
+   "激活函數": {
+    "value": "relu",
+    "source": "reports/paper.md §4.3 表格"
+   },
+   "優化器": {
+    "value": "adam",
+    "source": "reports/paper.md §4.3 表格"
+   },
+   "學習率": {
+    "value": "0.010000",
+    "source": "reports/paper.md §4.3 表格"
+   },
+   "L2 正則化 (alpha)": {
+    "value": "0.000100",
+    "source": "reports/paper.md §4.3 表格"
+   },
+   "最大迭代次數": {
+    "value": "2000",
+    "source": "reports/paper.md §4.3 表格"
+   },
+   "實際迭代次數": {
+    "value": "343",
+    "source": "reports/paper.md §4.3 表格"
+   },
+   "隨機種子": {
+    "value": "42",
+    "source": "reports/paper.md §4.3 表格"
+   }
+  },
+  "loss": {
+   "initial": "1.1575",
+   "final": "0.0050",
+   "iterations": "343",
+   "source": "reports/paper.md §5.1 內文"
+  },
+  "pca": {
+   "explained_variance_pct": [
+    "92.46",
+    "5.31",
+    "1.71"
+   ],
+   "cumulative_pct": "99.48",
+   "source": "reports/paper.md §3.5 內文"
+  }
+ },
+ "ai4i": {
+  "status": "ai4i_analysis/evaluate.py 已存在（issue #9），但目前尚未產生任何持久化的指標或圖，因此這裡不放任何 AI4I 數字",
+  "expects": [
+   "outputs/ai4i_figures/ (evaluate.py 產出)",
+   "ai4i_analysis.evaluate.compare_models() 比較表"
+  ]
+ },
+ "sources": {
+  "paper": "reports/paper.md",
+  "figures_dir": "outputs/figures"
+ },
+ "sources_css_note": "figures 已複製至 docs/figures/（逐字元複製原檔）",
+ "figures": [
+  {
+   "file": "figures/class_metrics.png",
+   "from": "outputs/figures/class_metrics.png",
+   "bytes": 31851
+  },
+  {
+   "file": "figures/confusion_matrix.png",
+   "from": "outputs/figures/confusion_matrix.png",
+   "bytes": 42258
+  },
+  {
+   "file": "figures/correlation_heatmap.png",
+   "from": "outputs/figures/correlation_heatmap.png",
+   "bytes": 58415
+  },
+  {
+   "file": "figures/feature_distributions.png",
+   "from": "outputs/figures/feature_distributions.png",
+   "bytes": 78437
+  },
+  {
+   "file": "figures/learning_curve.png",
+   "from": "outputs/figures/learning_curve.png",
+   "bytes": 40179
+  },
+  {
+   "file": "figures/pca_3d.png",
+   "from": "outputs/figures/pca_3d.png",
+   "bytes": 205771
+  }
+ ]
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>機器學習專案分析總覽</title>
+<style>
+  body{font-family:"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+       margin:0;background:#fafafa;color:#222;line-height:1.55}
+  main{max-width:900px;margin:0 auto;padding:24px 16px 64px}
+  h1{margin:0 0 4px}
+  .subtitle{color:#666;margin:0 0 20px}
+  .card{background:#fff;border:1px solid #ddd;border-radius:8px;padding:16px 20px;margin-bottom:20px}
+  .badges{display:flex;flex-wrap:wrap;gap:12px}
+  .badge{background:#eef4fb;border:1px solid #c7d9ee;border-radius:8px;padding:10px 14px;min-width:120px}
+  .badge .num{font-size:1.45rem;font-weight:700;font-variant-numeric:tabular-nums}
+  .badge .label{color:#555;font-size:.85rem}
+  .badge .src{color:#999;font-size:.75rem;margin-top:2px}
+  table{border-collapse:collapse;font-size:.9rem}
+  th,td{border:1px solid #ddd;padding:5px 10px}
+  th{background:#f2f2f2}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .fig{background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden}
+  .fig img{width:100%;display:block}
+  .fig figcaption{padding:8px 10px;font-size:.85rem;color:#444}
+  .muted{color:#777}
+  .warn{background:#fff6e6;border:1px solid #e8d5a0;border-radius:8px;padding:12px 16px;margin-bottom:20px}
+  a{color:#2b62a8}
+</style>
+</head>
+<body>
+<main>
+  <h1>機器學習專案分析總覽</h1>
+  <p class="subtitle">數字與圖 100% 來自既有產出（reports/paper.md、outputs/figures/），由 scripts/build_docs.py 搬移而成，不重新訓練、不重算。</p>
+
+  <div class="card" id="error-box" style="display:none"></div>
+
+  <div id="content" style="display:none">
+    <div class="card">
+      <h2 id="m-title">—</h2>
+      <div class="badges" id="m-badges"></div>
+    </div>
+    <div class="card">
+      <h2>損失收斂、PCA 與資料規模</h2>
+      <div id="misc"></div>
+    </div>
+    <div class="card">
+      <h2>類別分布</h2>
+      <div id="balance"></div>
+    </div>
+    <div class="card">
+      <h2>既有圖表（原檔複製，未重繪）</h2>
+      <div class="grid" id="figs"></div>
+    </div>
+    <div class="card" id="ai4i-note"></div>
+    <div class="card">
+      <h2>延伸頁面</h2>
+      <ul>
+        <li><a id="l-report" href="report.html">小論文全文（HTML 版）</a></li>
+        <li><a href="inference.html">互動推論示範（Iris / AI4I）</a></li>
+      </ul>
+    </div>
+  </div>
+</main>
+<script>
+(function () {
+  var el = function (id) { return document.getElementById(id); };
+  var box = el('error-box');
+  fetch('results.json').then(function (r) {
+    if (!r.ok) { throw new Error('results.json HTTP ' + r.status); }
+    return r.json();
+  }).then(function (data) {
+    var iris = data.iris;
+    el('m-title').textContent = 'Iris 分類指標（來源：' + (data.sources && data.sources.paper || 'reports/paper.md') + '）';
+    var badges = '';
+    Object.keys(iris.metrics).forEach(function (k) {
+      var m = iris.metrics[k];
+      badges += '<div class="badge"><div class="num">' + m.value.replace('\n', '') +
+        '</div><div class="label">' + k + '</div><div class="src">' + m.source + '</div></div>';
+    });
+    el('m-badges').innerHTML = badges;
+
+    var misc = '<table>';
+    var loss = iris.loss, pca = iris.pca, checks = iris.dataset_checks;
+    misc += '<tr><th>訓練損失初始 / 最終 / 迭代次數</th><td>' + loss.initial + ' / ' + loss.final + ' / ' + loss.iterations +
+      '</td><td class="muted">' + loss.source + '</td></tr>';
+    misc += '<tr><th>PCA 前三主成分解釋變異量 (累積)</th><td>' + pca.explained_variance_pct.join('% / ') + '%（累積 ' + pca.cumulative_pct + '%）</td><td class="muted">' + pca.source + '</td></tr>';
+    Object.keys(checks).forEach(function (k) {
+      misc += '<tr><th>' + k + '</th><td>' + checks[k] + '</td><td class="muted">' + iris.dataset_checks_source + '</td></tr>';
+    });
+    misc += '</table>';
+    el('misc').innerHTML = misc;
+
+    var bal = iris.class_balance;
+    var t = '<table><tr>';
+    bal.header.forEach(function (h) { t += '<th>' + (h || '(空)') + '</th>'; });
+    t += '</tr>';
+    bal.rows.forEach(function (r) { t += '<tr>'; r.forEach(function (c) { t += '<td>' + c + '</td>'; }); t += '</tr>'; });
+    t += '</table><p class="muted">來源：' + bal.source + '</p>';
+    el('balance').innerHTML = t;
+
+    var figs = '';
+    (data.figures || []).forEach(function (f) {
+      figs += '<a class="fig" href="' + f.file + '" target="_blank"><img src="' + f.file + '" alt="' + f.file + '">' +
+        '<figcaption>' + f.file + '（複製自 ' + f.from + '）</figcaption></a>';
+    });
+    el('figs').innerHTML = figs || '<p class="muted">無圖表。</p>';
+
+    el('ai4i-note').innerHTML =
+      '<h2>AI4I 2020</h2><p class="muted">' + data.ai4i.status + '。互動推論示範已有 AI4I 表單（inference.html）。</p>' +
+      '<ul>' + (data.ai4i.expects || []).map(function (x) { return '<li><code>' + x + '</code></li>'; }).join('') + '</ul>';
+
+    el('content').style.display = '';
+  }).catch(function (e) {
+    box.style.display = '';
+    box.innerHTML = '<strong>無法載入 results.json：' + e.message + '</strong><br>' +
+      '由於瀏覽器安全限制，file:// 直開無法 fetch JSON。請在本目錄以靜態伺服器開啟：' +
+      '<code>python -m http.server 8000</code> 後訪問 <code>http://localhost:8000/docs/</code>';
+  });
+})();
+</script>
+</body>
+</html>
