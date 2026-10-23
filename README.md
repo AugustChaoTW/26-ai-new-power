@@ -16,7 +16,7 @@
 ├── scripts/run_analysis.py        # 命令列入口
 ├── outputs/figures/               # 產出的圖表
 ├── reports/paper.md               # 小論文
-└── tests/                         # TDD 測試（17 個）
+└── tests/                         # TDD 測試（50 個：iris 17 ＋ AI4I 33）
 ```
 
 ## 環境需求
@@ -62,7 +62,7 @@ python -m pytest -q
 3. 實作 `iris_analysis/` 對應模組直至測試通過（綠燈）。
 4. 重構並執行完整流程驗證產出。
 
-目前測試結果：**17 passed**。
+目前測試結果：**50 passed**（iris 17 ＋ AI4I data 8 ＋ model 11 ＋ evaluate 10 ＋ conclusions 4）。
 
 ## 實驗結果
 
@@ -112,4 +112,4 @@ python -m pytest -q
   - `compare_models()`：4 模型指標彙整表，以 PR-AUC 為首欄降冪排序
   - 5 個繪圖函式輸出至 `outputs/ai4i_figures/`：PR/ROC 曲線 4 模型同圖、per-model 混淆矩陣×4、MLP loss 曲線、模型比較長條，共 8 張
   - Dummy accuracy 陷阱示範：96.6% acc 但 PR-AUC≈0.034（=正類比例）、ROC-AUC≈0.5
-  - 全套件測試：46 = iris 17 + ai4i data 8 + model 11 + evaluate 10
+  - 全套件測試：50 = iris 17 + ai4i data 8 + model 11 + evaluate 10 + conclusions 4
