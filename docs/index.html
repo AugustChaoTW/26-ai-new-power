@@ -3,64 +3,163 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>機器學習專案分析總覽</title>
+<title>26-ai-new-power — 分析總覽</title>
 <style>
-  body{font-family:"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
-       margin:0;background:#fafafa;color:#222;line-height:1.55}
-  main{max-width:900px;margin:0 auto;padding:24px 16px 64px}
-  h1{margin:0 0 4px}
-  .subtitle{color:#666;margin:0 0 20px}
-  .card{background:#fff;border:1px solid #ddd;border-radius:8px;padding:16px 20px;margin-bottom:20px}
-  .badges{display:flex;flex-wrap:wrap;gap:12px}
-  .badge{background:#eef4fb;border:1px solid #c7d9ee;border-radius:8px;padding:10px 14px;min-width:120px}
-  .badge .num{font-size:1.45rem;font-weight:700;font-variant-numeric:tabular-nums}
-  .badge .label{color:#555;font-size:.85rem}
-  .badge .src{color:#999;font-size:.75rem;margin-top:2px}
-  table{border-collapse:collapse;font-size:.9rem}
-  th,td{border:1px solid #ddd;padding:5px 10px}
-  th{background:#f2f2f2}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-  .fig{background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden}
+  :root{
+    --bg:#f5f5f7; --panel:#ffffff; --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#86868b;
+    --line:#e5e5ea; --blue:#0071e3; --radius:22px;
+    --grad1:#ff6a3d; --grad2:#c155ec; --grad3:#3a7bfd;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
+      "Helvetica Neue","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em}
+  main{max-width:1040px;margin:0 auto;padding:120px 24px 80px}
+
+  /* 毛玻璃導覽列 */
+  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;
+    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid rgba(0,0,0,.08)}
+  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;
+    justify-content:space-between;padding:0 24px}
+  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}
+  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none;
+    transition:color .25s ease}
+  nav .links a:hover{color:var(--ink)}
+
+  /* Hero */
+  .hero{text-align:center;padding:56px 0 40px}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:700;letter-spacing:-.02em;
+    margin:0 0 14px;line-height:1.08;
+    background:linear-gradient(96deg,var(--grad1) 0%,var(--grad2) 45%,var(--grad3) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{max-width:620px;margin:0 auto;color:var(--ink2);font-size:1.12rem}
+  .hero .cta{display:inline-flex;gap:14px;margin-top:26px}
+  .cta a{padding:10px 22px;border-radius:980px;font-size:.95rem;text-decoration:none;
+    transition:transform .3s ease, box-shadow .3s ease}
+  .cta a.primary{background:var(--blue);color:#fff}
+  .cta a.primary:hover{box-shadow:0 8px 24px rgba(0,113,227,.35);transform:translateY(-1px)}
+  .cta a.ghost{border:1px solid var(--line);color:var(--ink);background:transparent}
+  .cta a.ghost:hover{border-color:var(--ink3)}
+
+  /* 卡片 */
+  .card{background:var(--panel);border-radius:var(--radius);padding:34px 36px;margin-bottom:22px;
+    box-shadow:0 2px 12px rgba(0,0,0,.05),0 12px 32px rgba(0,0,0,.04);
+    transition:transform .35s ease, box-shadow .35s ease}
+  .card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.06),0 18px 44px rgba(0,0,0,.06)}
+  .card h2{font-size:1.55rem;font-weight:700;letter-spacing:-.01em;margin:0 0 18px}
+  .card .eyebrow{color:var(--grad2);font-weight:600;font-size:.8rem;text-transform:uppercase;
+    letter-spacing:.12em;margin:0 0 6px}
+
+  /* 指標徽章 */
+  .badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+  .badge{background:#fbfbfd;border:1px solid var(--line);border-radius:16px;padding:20px 22px;
+    transition:transform .3s ease}
+  .badge:hover{transform:scale(1.02)}
+  .badge .num{font-size:2.2rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+    background:linear-gradient(120deg,var(--grad3),var(--grad2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .badge .label{color:var(--ink);font-size:.9rem;font-weight:600;margin-top:2px}
+
+  /* 表格 */
+  table{border-collapse:collapse;width:100%;font-size:.92rem}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  th{color:var(--ink2);font-weight:600;font-size:.82rem}
+  td{font-variant-numeric:tabular-nums}
+  tr:last-child th,tr:last-child td{border-bottom:none}
+  table.round{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+
+  /* 圖表格 */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+  .fig{display:block;background:var(--panel);border-radius:18px;overflow:hidden;
+    text-decoration:none;color:var(--ink);box-shadow:0 2px 12px rgba(0,0,0,.05);
+    transition:transform .35s ease, box-shadow .35s ease}
+  .fig:hover{transform:scale(1.025);box-shadow:0 8px 28px rgba(0,0,0,.10)}
   .fig img{width:100%;display:block}
-  .fig figcaption{padding:8px 10px;font-size:.85rem;color:#444}
-  .muted{color:#777}
-  .warn{background:#fff6e6;border:1px solid #e8d5a0;border-radius:8px;padding:12px 16px;margin-bottom:20px}
-  a{color:#2b62a8}
+  .fig figcaption{padding:12px 16px;font-size:.85rem;color:var(--ink2)}
+
+  .muted{color:var(--ink3)}
+  .small{font-size:.8rem;color:var(--ink3);margin-top:6px}
+  .warn{background:linear-gradient(120deg,#fff8f1,#f3f5ff);border:1px solid var(--line);
+    border-radius:var(--radius);padding:24px 30px;margin-bottom:22px}
+  .warn h2{font-size:1.3rem;margin:0 0 8px}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  footer{text-align:center;color:var(--ink3);font-size:.8rem;padding:30px 0 10px}
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#000;--panel:#1c1c1e;--ink:#f5f5f7;--ink2:#a1a1a6;--ink3:#6f6f76;--line:#2c2c2e}
+    .badge{background:#111114}
+    nav{background:rgba(22,22,23,.72);border-bottom:1px solid rgba(255,255,255,.08)}
+    .warn{background:#1c1c1e}
+  }
 </style>
 </head>
 <body>
+<nav><div class="inner">
+  <a class="brand" href="#">26-ai-new-power</a>
+  <span class="links">
+    <a href="#metrics">指標</a>
+    <a href="#details">細節</a>
+    <a href="#figures">圖表</a>
+    <a href="report.html">論文</a>
+    <a href="inference.html">互動推論</a>
+  </span>
+</div></nav>
+
 <main>
-  <h1>機器學習專案分析總覽</h1>
-  <p class="subtitle">數字與圖 100% 來自既有產出（reports/paper.md、outputs/figures/），由 scripts/build_docs.py 搬移而成，不重新訓練、不重算。</p>
+  <div class="hero">
+    <h1>從資料到洞察。<br>一步到位。</h1>
+    <p>所有數字與圖表皆直接沿用既有產出（reports/paper.md、outputs/figures/），由 scripts/build_docs.py 搬移生成——不重新訓練、不重算、不編造。</p>
+    <div class="cta">
+      <a class="primary" href="#metrics">查看指標</a>
+      <a class="ghost" href="inference.html">互動推論示範</a>
+    </div>
+  </div>
 
   <div class="card" id="error-box" style="display:none"></div>
 
   <div id="content" style="display:none">
-    <div class="card">
+    <div class="card" id="metrics">
+      <p class="eyebrow">Performance</p>
       <h2 id="m-title">—</h2>
       <div class="badges" id="m-badges"></div>
     </div>
-    <div class="card">
+
+    <div class="card" id="details">
+      <p class="eyebrow">Pipeline</p>
       <h2>損失收斂、PCA 與資料規模</h2>
       <div id="misc"></div>
     </div>
+
     <div class="card">
+      <p class="eyebrow">Dataset</p>
       <h2>類別分布</h2>
       <div id="balance"></div>
     </div>
-    <div class="card">
-      <h2>既有圖表（原檔複製，未重繪）</h2>
+
+    <div class="card" id="figures">
+      <p class="eyebrow">Gallery</p>
+      <h2>既有圖表</h2>
+      <p class="muted" style="margin-top:-10px">原檔逐字元複製，未重繪。</p>
       <div class="grid" id="figs"></div>
     </div>
-    <div class="card" id="ai4i-note"></div>
+
+    <div class="warn" id="ai4i-note"></div>
+
     <div class="card">
+      <p class="eyebrow">Explore</p>
       <h2>延伸頁面</h2>
-      <ul>
-        <li><a id="l-report" href="report.html">小論文全文（HTML 版）</a></li>
-        <li><a href="inference.html">互動推論示範（Iris / AI4I）</a></li>
+      <ul style="margin:0;padding-left:18px">
+        <li><a href="report.html">小論文全文（HTML 版）</a> — 轉換自 reports/paper.md</li>
+        <li><a href="inference.html">互動推論示範（Iris / AI4I）</a> — 參數自 Python 訓練直接複製</li>
       </ul>
     </div>
   </div>
+
+  <footer>Generated by scripts/build_docs.py · GitHub Pages · main /docs</footer>
 </main>
 <script>
 (function () {
@@ -71,20 +170,20 @@
     return r.json();
   }).then(function (data) {
     var iris = data.iris;
-    el('m-title').textContent = 'Iris 分類指標（來源：' + (data.sources && data.sources.paper || 'reports/paper.md') + '）';
+    el('m-title').textContent = 'Iris 分類指標';
     var badges = '';
     Object.keys(iris.metrics).forEach(function (k) {
       var m = iris.metrics[k];
-      badges += '<div class="badge"><div class="num">' + m.value.replace('\n', '') +
-        '</div><div class="label">' + k + '</div><div class="src">' + m.source + '</div></div>';
+      badges += '<div class="badge"><div class="num">' + m.value +
+        '</div><div class="label">' + k + '</div><div class="small">' + m.source + '</div></div>';
     });
     el('m-badges').innerHTML = badges;
 
-    var misc = '<table>';
+    var misc = '<table class="round">';
     var loss = iris.loss, pca = iris.pca, checks = iris.dataset_checks;
-    misc += '<tr><th>訓練損失初始 / 最終 / 迭代次數</th><td>' + loss.initial + ' / ' + loss.final + ' / ' + loss.iterations +
+    misc += '<tr><th>訓練損失 初始 / 最終 / 迭代</th><td>' + loss.initial + ' / ' + loss.final + ' / ' + loss.iterations +
       '</td><td class="muted">' + loss.source + '</td></tr>';
-    misc += '<tr><th>PCA 前三主成分解釋變異量 (累積)</th><td>' + pca.explained_variance_pct.join('% / ') + '%（累積 ' + pca.cumulative_pct + '%）</td><td class="muted">' + pca.source + '</td></tr>';
+    misc += '<tr><th>PCA 前三主成分解釋變異量</th><td>' + pca.explained_variance_pct.join('% / ') + '%（累積 ' + pca.cumulative_pct + '%）</td><td class="muted">' + pca.source + '</td></tr>';
     Object.keys(checks).forEach(function (k) {
       misc += '<tr><th>' + k + '</th><td>' + checks[k] + '</td><td class="muted">' + iris.dataset_checks_source + '</td></tr>';
     });
@@ -92,30 +191,30 @@
     el('misc').innerHTML = misc;
 
     var bal = iris.class_balance;
-    var t = '<table><tr>';
+    var t = '<table class="round"><tr>';
     bal.header.forEach(function (h) { t += '<th>' + (h || '(空)') + '</th>'; });
     t += '</tr>';
     bal.rows.forEach(function (r) { t += '<tr>'; r.forEach(function (c) { t += '<td>' + c + '</td>'; }); t += '</tr>'; });
-    t += '</table><p class="muted">來源：' + bal.source + '</p>';
+    t += '</table><p class="small">' + bal.source + '</p>';
     el('balance').innerHTML = t;
 
     var figs = '';
     (data.figures || []).forEach(function (f) {
       figs += '<a class="fig" href="' + f.file + '" target="_blank"><img src="' + f.file + '" alt="' + f.file + '">' +
-        '<figcaption>' + f.file + '（複製自 ' + f.from + '）</figcaption></a>';
+        '<figcaption>' + f.file + '<br><span class="small">複製自 ' + f.from + '</span></figcaption></a>';
     });
     el('figs').innerHTML = figs || '<p class="muted">無圖表。</p>';
 
     el('ai4i-note').innerHTML =
-      '<h2>AI4I 2020</h2><p class="muted">' + data.ai4i.status + '。互動推論示範已有 AI4I 表單（inference.html）。</p>' +
+      '<p class="eyebrow">Next up</p><h2>AI4I 2020</h2>' +
+      '<p class="muted">' + data.ai4i.status + '。互動推論示範已有 AI4I 表單。</p>' +
       '<ul>' + (data.ai4i.expects || []).map(function (x) { return '<li><code>' + x + '</code></li>'; }).join('') + '</ul>';
 
     el('content').style.display = '';
   }).catch(function (e) {
     box.style.display = '';
     box.innerHTML = '<strong>無法載入 results.json：' + e.message + '</strong><br>' +
-      '由於瀏覽器安全限制，file:// 直開無法 fetch JSON。請在本目錄以靜態伺服器開啟：' +
-      '<code>python -m http.server 8000</code> 後訪問 <code>http://localhost:8000/docs/</code>';
+      'file:// 直開無法 fetch JSON，請以靜態伺服器開啟：<code>python -m http.server 8000</code>';
   });
 })();
 </script>

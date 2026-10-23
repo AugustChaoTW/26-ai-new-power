@@ -163,7 +163,7 @@
   }
  },
  "ai4i": {
-  "status": "ai4i_analysis/evaluate.py 已存在（issue #9），但目前尚未產生任何持久化的指標或圖，因此這裡不放任何 AI4I 數字",
+  "status": "ai4i_analysis/evaluate.py（issue #9）已產出 8 張圖（outputs/ai4i_figures/，已複製至 docs/figures/），但 PR-AUC 等指標尚未有持久化檔案，因此本頁不放任何 AI4I 數字",
   "expects": [
    "outputs/ai4i_figures/ (evaluate.py 產出)",
    "ai4i_analysis.evaluate.compare_models() 比較表"
@@ -204,6 +204,46 @@
    "file": "figures/pca_3d.png",
    "from": "outputs/figures/pca_3d.png",
    "bytes": 205771
+  },
+  {
+   "file": "figures/ai4i_pr_curves.png",
+   "from": "outputs/ai4i_figures/ai4i_pr_curves.png",
+   "bytes": 116922
+  },
+  {
+   "file": "figures/ai4i_roc_curves.png",
+   "from": "outputs/ai4i_figures/ai4i_roc_curves.png",
+   "bytes": 92317
+  },
+  {
+   "file": "figures/confusion_matrix_dummy.png",
+   "from": "outputs/ai4i_figures/confusion_matrix_dummy.png",
+   "bytes": 37117
+  },
+  {
+   "file": "figures/confusion_matrix_logreg.png",
+   "from": "outputs/ai4i_figures/confusion_matrix_logreg.png",
+   "bytes": 37877
+  },
+  {
+   "file": "figures/confusion_matrix_mlp.png",
+   "from": "outputs/ai4i_figures/confusion_matrix_mlp.png",
+   "bytes": 40104
+  },
+  {
+   "file": "figures/confusion_matrix_rf.png",
+   "from": "outputs/ai4i_figures/confusion_matrix_rf.png",
+   "bytes": 35087
+  },
+  {
+   "file": "figures/learning_curve_mlp.png",
+   "from": "outputs/ai4i_figures/learning_curve_mlp.png",
+   "bytes": 44678
+  },
+  {
+   "file": "figures/model_comparison.png",
+   "from": "outputs/ai4i_figures/model_comparison.png",
+   "bytes": 41519
   }
  ]
 }
