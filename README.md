@@ -103,3 +103,8 @@ python -m pytest -q
   - DOI：10.24432/C5HS5C；授權：CC BY 4.0
   - 取得方式：`python ai4i_analysis/data.py`
 - `ai4i_analysis/data.py`：下載、保存、讀取與欄位驗證模組（TDD，`tests/test_ai4i_data.py` 8 個測試）
+- `ai4i_analysis/model.py`：模型訓練模組（TDD，`tests/test_ai4i_model.py` 11 個測試）
+  - `prepare_training_data()`：最小前處理 — 防洩漏特徵 5 感測器＋Type one-hot 共 8 欄、分層切分 0.2、StandardScaler 僅以訓練集 fit
+  - `build_models()`：DummyClassifier 對照組 / LogisticRegression / RandomForest / MLP，皆可重現（random_state=42）
+  - `train_model()`：MLP 因 sklearn 不支援 class_weight，以等效過採樣實作 {0:1, 1:28}
+  - 全套件測試：36 = iris 17 + ai4i data 8 + ai4i model 11
