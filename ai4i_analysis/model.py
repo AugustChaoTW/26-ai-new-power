@@ -28,10 +28,20 @@ Class imbalance reference: 339 failures / 10,000 rows ≈ 1 : 28.5.
 
 Issue tracking: implements issue #8 (work item 5 of #3). Tests:
 ``tests/test_ai4i_model.py``.
+
+Persistence (conclusion 4 of "morning experiment conclusions")
+-------------------------------------------------------------
+A saved model without its preprocessing state cannot reproduce predictions
+on new data, so :func:`prepare_training_data_with_state` exposes the fitted
+``StandardScaler`` that :func:`prepare_training_data` consumes internally,
+and :func:`save_preprocessing` / :func:`load_preprocessing` / 
+:func:`rebuild_scaler` round-trip its parameters (mean / std / feature
+layout) through JSON.
 """
 
 from __future__ import annotations
 
+import json
 import sys
 import time
 from pathlib import Path
@@ -70,8 +80,19 @@ ONE_HOT_COLUMNS = ["Type_H", "Type_L", "Type_M"]
 # Locked feature layout: sensors first, then one-hot columns alphabetically.
 FEATURE_COLUMNS = SENSOR_COLUMNS + ONE_HOT_COLUMNS
 
-# Failure-mode flags / identifiers are label leakage if used as features.
-LEAKAGE_COLUMNS = ["UDI", "Product ID", "TWF", "HDF", "PWF", "OSF", "RNF"]
+# Failure-mode flags / identifiers / the target itself are label leakage if
+# used as features. "Machine failure" is the strongest leakage of all — the
+# five flags are its components — so it is included here (conclusion 1).
+LEAKAGE_COLUMNS = [
+    "UDI",
+    "Product ID",
+    "Machine failure",
+    "TWF",
+    "HDF",
+    "PWF",
+    "OSF",
+    "RNF",
+]
 
 # MLP equivalent weighting: 339 / 10000 ≈ 1 : 28.5 -> minority class x 28.
 CLASS_WEIGHTS = {0: 1.0, 1: 28.0}
@@ -143,19 +164,21 @@ def check_no_leakage(feature_columns) -> None:
 # ---------------------------------------------------------------------------
 
 
-def prepare_training_data(
+def _split_and_scale(
     df: pd.DataFrame | None = None,
     test_size: float = 0.2,
     random_state: int = 42,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, list[str]]:
-    """Build leakage-safe, scaled training data.
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, list[str], StandardScaler]:
+    """Shared split+scale core of :func:`prepare_training_data`.
 
     Steps: one-hot encode ``Type`` (``Type_H`` / ``Type_L`` / ``Type_M``),
     assemble features in :data:`FEATURE_COLUMNS` order, stratified 80/20
     split, then ``StandardScaler`` fit on the train split only.
 
-    Returns ``(X_train, X_test, y_train, y_test, feature_names)`` where the
-    ``X`` matrices are numpy arrays and ``y`` arrays are integer.
+    Returns ``(X_train, X_test, y_train, y_test, feature_names, scaler)``
+    where the ``X`` matrices are numpy arrays, ``y`` arrays are integer, and
+    ``scaler`` is the fitted ``StandardScaler`` (needed by conclusion 4:
+    its mean/std are what gets persisted).
     """
     if df is None:
         df = load_ai4i_dataframe()
@@ -186,7 +209,102 @@ def prepare_training_data(
         np.asarray(y_train, dtype=int),
         np.asarray(y_test, dtype=int),
         list(X.columns),
+        scaler,
     )
+
+
+def prepare_training_data(
+    df: pd.DataFrame | None = None,
+    test_size: float = 0.2,
+    random_state: int = 42,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, list[str]]:
+    """Build leakage-safe, scaled training data.
+
+    Thin wrapper over :func:`_split_and_scale` that drops the scaler, keeping
+    the locked 5-tuple interface ``(X_train, X_test, y_train, y_test,
+    feature_names)`` of issue #8 unchanged. Use
+    :func:`prepare_training_data_with_state` when the fitted scaler is also
+    needed (conclusion 4 persistence).
+    """
+    (
+        X_train,
+        X_test,
+        y_train,
+        y_test,
+        feature_names,
+        _scaler,
+    ) = _split_and_scale(df, test_size=test_size, random_state=random_state)
+    return X_train, X_test, y_train, y_test, feature_names
+
+
+def prepare_training_data_with_state(
+    df: pd.DataFrame | None = None,
+    test_size: float = 0.2,
+    random_state: int = 42,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, list[str], StandardScaler]:
+    """Same data as :func:`prepare_training_data`, plus the fitted scaler.
+
+    Conclusion 4 of the "morning experiment conclusions" requires the
+    preprocessing parameters (mean / std) to be persisted; this is the entry
+    point that exposes them so tests / scripts can call
+    :func:`save_preprocessing` on the returned ``scaler``.
+    """
+    return _split_and_scale(df, test_size=test_size, random_state=random_state)
+
+
+# ---------------------------------------------------------------------------
+# Preprocessing persistence (conclusion 4: save / reload the scaler)
+# ---------------------------------------------------------------------------
+
+
+def save_preprocessing(
+    path: Path | str,
+    scaler: StandardScaler,
+    feature_names,
+) -> Path:
+    """Persist the fitted scaler's parameters and feature layout as JSON.
+
+    Writes ``{"scaler_mean": [...], "scaler_scale": [...],
+    "feature_names": [...]}`` with full-precision floats (Python's JSON float
+    repr round-trips exactly, so reloaded parameters are bit-identical) and
+    returns the written path. A model saved without these parameters cannot
+    reproduce its predictions on new data — that is the invariant locked by
+    conclusion 4.
+    """
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "scaler_mean": [float(value) for value in scaler.mean_],
+        "scaler_scale": [float(value) for value in scaler.scale_],
+        "feature_names": [str(name) for name in feature_names],
+    }
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    return path
+
+
+def load_preprocessing(path: Path | str) -> dict:
+    """Load the JSON payload written by :func:`save_preprocessing`.
+
+    Returns a dict with keys ``{"scaler_mean", "scaler_scale",
+    "feature_names"}``; pass it to :func:`rebuild_scaler` to get a usable
+    ``StandardScaler`` again.
+    """
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def rebuild_scaler(params: dict) -> StandardScaler:
+    """Rebuild a fitted ``StandardScaler`` from :func:`load_preprocessing`.
+
+    Restores ``mean_`` / ``scale_`` (and the derived ``var_``) so the scaler
+    can be used directly for ``transform`` — reproducing bit-identical
+    transformed matrices and therefore identical model predictions.
+    """
+    scaler = StandardScaler()
+    scaler.mean_ = np.asarray(params["scaler_mean"], dtype=float)
+    scaler.scale_ = np.asarray(params["scaler_scale"], dtype=float)
+    scaler.var_ = scaler.scale_ ** 2
+    scaler.n_features_in_ = len(scaler.mean_)
+    return scaler
 
 
 # ---------------------------------------------------------------------------
