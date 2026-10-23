@@ -205,10 +205,36 @@
     });
     el('figs').innerHTML = figs || '<p class="muted">無圖表。</p>';
 
-    el('ai4i-note').innerHTML =
-      '<p class="eyebrow">Next up</p><h2>AI4I 2020</h2>' +
-      '<p class="muted">' + data.ai4i.status + '。互動推論示範已有 AI4I 表單。</p>' +
-      '<ul>' + (data.ai4i.expects || []).map(function (x) { return '<li><code>' + x + '</code></li>'; }).join('') + '</ul>';
+    var note = data.ai4i || {};
+    if (note.metrics && note.metrics.models) {
+      var rank = note.metrics.ranking_by_pr_auc || Object.keys(note.metrics.models);
+      var mm = note.metrics.models;
+      var aiHtml = '<p class="eyebrow">Failure Prediction</p><h2>AI4I 2020 故障預測</h2>';
+      aiHtml += '<p class="muted">主要指標 PR-AUC（average precision）；測試集 ' + note.metrics.test_rows +
+        ' 筆（陽性率 ' + (note.metrics.test_positive_rate * 100).toFixed(2) + '%）。來源：' + note.metrics.source + '</p>';
+      aiHtml += '<div class="badges" style="margin-bottom:16px">';
+      rank.forEach(function (name) {
+        aiHtml += '<div class="badge"><div class="num">' + Number(mm[name].pr_auc).toFixed(3) +
+          '</div><div class="label">' + name + '</div><div class="small">PR-AUC · F1 ' + Number(mm[name].f1).toFixed(3) + '</div></div>';
+      });
+      aiHtml += '</div><table class="round"><tr>';
+      ['roc_auc', 'precision', 'recall', 'f1', 'accuracy'].forEach(function (h) { aiHtml += '<th>' + h.replace('_', ' ') + '</th>'; });
+      aiHtml += '</tr>';
+      rank.forEach(function (name) {
+        aiHtml += '<tr><th>' + name + '</th>';
+        ['roc_auc', 'precision', 'recall', 'f1', 'accuracy'].forEach(function (k) {
+          aiHtml += '<td>' + Number(mm[name][k]).toFixed(4) + '</td>';
+        });
+        aiHtml += '</tr>';
+      });
+      aiHtml += '</table><p class="small">依 PR-AUC 排序；完整數字見 results.json（ai4i.metrics）。</p>';
+      el('ai4i-note').innerHTML = aiHtml;
+    } else {
+      el('ai4i-note').innerHTML =
+        '<p class="eyebrow">Next up</p><h2>AI4I 2020</h2>' +
+        '<p class="muted">' + note.status + '。互動推論示範已有 AI4I 表單。</p>' +
+        '<ul>' + (note.expects || []).map(function (x) { return '<li><code>' + x + '</code></li>'; }).join('') + '</ul>';
+    }
 
     el('content').style.display = '';
   }).catch(function (e) {

@@ -194,6 +194,52 @@ def parse_paper(paper_path: Path) -> dict:
 # ---------------------------------------------------------------------------
 
 
+REPORT_CHROME_CSS = """
+  :root{--bg:#f5f5f7;--panel:#fff;--ink:#1d1d1f;--ink2:#6e6e73;--ink3:#86868b;--line:#e5e5ea;
+    --blue:#0071e3;--grad1:#ff6a3d;--grad2:#c155ec;--grad3:#3a7bfd}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.75;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
+      "Helvetica Neue","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+    -webkit-font-smoothing:antialiased;letter-spacing:.01em}
+  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;
+    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}
+  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;
+    justify-content:space-between;padding:0 24px}
+  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}
+  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none}
+  nav .links a:hover{color:var(--ink)}
+  main{max-width:820px;margin:0 auto;padding:100px 24px 80px}
+  h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;
+    background:linear-gradient(96deg,var(--grad1),var(--grad2) 45%,var(--grad3));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font-size:1.7rem;font-weight:700;letter-spacing:-.01em;margin:44px 0 12px}
+  h3{font-size:1.15rem;font-weight:700;margin:26px 0 10px}
+  p{font-size:1rem;color:var(--ink)}
+  em{color:var(--ink2);font-size:.9rem}
+  img{max-width:100%;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,.06),0 12px 32px rgba(0,0,0,.05);
+    margin:18px auto;display:block;transition:transform .35s ease, box-shadow .35s ease}
+  img:hover{transform:scale(1.015);box-shadow:0 8px 28px rgba(0,0,0,.11)}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;margin:14px 0;
+    border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);
+    font-variant-numeric:tabular-nums}
+  th{background:#f2f2f4;color:var(--ink2);font-weight:600;font-size:.82rem}
+  td{background:var(--panel)}
+  code{background:#ececf0;border-radius:6px;padding:2px 7px;font-size:.88em}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  ol{color:var(--ink2);font-size:.95rem}
+  hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#000;--panel:#1c1c1e;--ink:#f5f5f7;--ink2:#a1a1a6;--ink3:#6f6f76;--line:#2c2c2e}
+    nav{background:rgba(22,22,23,.72);border-bottom:1px solid rgba(255,255,255,.08)}
+    th{background:#111114}td{background:transparent}
+  }
+"""
+
+
 def build_report_html(paper_path: Path) -> str:
     import markdown
 
@@ -203,14 +249,14 @@ def build_report_html(paper_path: Path) -> str:
     return (
         '<!DOCTYPE html>\n<html lang="zh-Hant">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-        "<title>Iris 資料集分析小論文</title>\n"
-        "<style>body{font-family:sans-serif;max-width:860px;margin:0 auto;padding:24px;"
-        "line-height:1.6}img{max-width:100%}table{border-collapse:collapse}"
-        "th,td{border:1px solid #ccc;padding:6px 10px}code{background:#f4f4f4}</style>\n"
+        "<title>分析小論文 — 26-ai-new-power</title>\n"
+        "<style>" + REPORT_CHROME_CSS + "</style>\n"
         "</head>\n<body>\n"
-        '<p><a href="index.html">← 回分析總覽</a>｜<a href="inference.html">互動推論示範</a></p>\n'
-        + body
-        + "\n</body>\n</html>\n"
+        '<nav><div class="inner"><a class="brand" href="index.html">26-ai-new-power</a>'
+        '<span class="links"><a href="index.html">分析總覽</a>'
+        '<a href="report.html">論文</a><a href="inference.html">互動推論</a></span></div></nav>\n'
+        "<main>" + body + "</main>\n"
+        "</body>\n</html>\n"
     )
 
 
@@ -425,10 +471,36 @@ INDEX_HTML = """<!DOCTYPE html>
     });
     el('figs').innerHTML = figs || '<p class="muted">無圖表。</p>';
 
-    el('ai4i-note').innerHTML =
-      '<p class="eyebrow">Next up</p><h2>AI4I 2020</h2>' +
-      '<p class="muted">' + data.ai4i.status + '。互動推論示範已有 AI4I 表單。</p>' +
-      '<ul>' + (data.ai4i.expects || []).map(function (x) { return '<li><code>' + x + '</code></li>'; }).join('') + '</ul>';
+    var note = data.ai4i || {};
+    if (note.metrics && note.metrics.models) {
+      var rank = note.metrics.ranking_by_pr_auc || Object.keys(note.metrics.models);
+      var mm = note.metrics.models;
+      var aiHtml = '<p class="eyebrow">Failure Prediction</p><h2>AI4I 2020 故障預測</h2>';
+      aiHtml += '<p class="muted">主要指標 PR-AUC（average precision）；測試集 ' + note.metrics.test_rows +
+        ' 筆（陽性率 ' + (note.metrics.test_positive_rate * 100).toFixed(2) + '%）。來源：' + note.metrics.source + '</p>';
+      aiHtml += '<div class="badges" style="margin-bottom:16px">';
+      rank.forEach(function (name) {
+        aiHtml += '<div class="badge"><div class="num">' + Number(mm[name].pr_auc).toFixed(3) +
+          '</div><div class="label">' + name + '</div><div class="small">PR-AUC · F1 ' + Number(mm[name].f1).toFixed(3) + '</div></div>';
+      });
+      aiHtml += '</div><table class="round"><tr>';
+      ['roc_auc', 'precision', 'recall', 'f1', 'accuracy'].forEach(function (h) { aiHtml += '<th>' + h.replace('_', ' ') + '</th>'; });
+      aiHtml += '</tr>';
+      rank.forEach(function (name) {
+        aiHtml += '<tr><th>' + name + '</th>';
+        ['roc_auc', 'precision', 'recall', 'f1', 'accuracy'].forEach(function (k) {
+          aiHtml += '<td>' + Number(mm[name][k]).toFixed(4) + '</td>';
+        });
+        aiHtml += '</tr>';
+      });
+      aiHtml += '</table><p class="small">依 PR-AUC 排序；完整數字見 results.json（ai4i.metrics）。</p>';
+      el('ai4i-note').innerHTML = aiHtml;
+    } else {
+      el('ai4i-note').innerHTML =
+        '<p class="eyebrow">Next up</p><h2>AI4I 2020</h2>' +
+        '<p class="muted">' + note.status + '。互動推論示範已有 AI4I 表單。</p>' +
+        '<ul>' + (note.expects || []).map(function (x) { return '<li><code>' + x + '</code></li>'; }).join('') + '</ul>';
+    }
 
     el('content').style.display = '';
   }).catch(function (e) {
@@ -608,6 +680,23 @@ def main() -> None:
 
     results = parse_paper(PAPER)
     results["sources"] = {"paper": "reports/paper.md", "figures_dir": str(FIGURES_OUT.relative_to(ROOT))}
+    # AI4I 指標：僅在「既有持久化產出」存在時併入（不在此訓練、不編數字）
+    ai4i_metrics_path = ROOT / "outputs" / "ai4i_metrics.json"
+    if ai4i_metrics_path.exists():
+        raw = json.loads(ai4i_metrics_path.read_text(encoding="utf-8"))
+        results["ai4i"] = {
+            "status": "AI4I 指標已由 scripts/export_ai4i_metrics.py 呼叫 ai4i_analysis.model / evaluate 既有函式評估後持久化（outputs/ai4i_metrics.json），下游只搬數字、不重算",
+            "metrics": {
+                "source": "outputs/ai4i_metrics.json (scripts/export_ai4i_metrics.py 產生，呼叫 ai4i_analysis.evaluate.evaluate_model)",
+                "primary": raw.get("primary_metric"),
+                "test_rows": raw.get("test_rows"),
+                "test_positive_rate": raw.get("test_positive_rate"),
+                "models": raw.get("models"),
+                "ranking_by_pr_auc": raw.get("ranking_by_pr_auc"),
+            },
+            "expects": [],
+        }
+        print("ai4i metrics merged:", ", ".join(raw.get("ranking_by_pr_auc") or []))
     results["sources_css_note"] = "figures 已複製至 docs/figures/（逐字元複製原檔）"
     results["figures"] = figures
 
