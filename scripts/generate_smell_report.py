@@ -187,6 +187,9 @@ eslint 違規總數：**{eslint_total}**。
 [13]: https://github.com/AugustChaoTW/26-ai-new-power/issues/13
 """
     report_path = ROOT / "reports" / "smell-report.md"
+    fixlog_path = ROOT / "reports" / "fix-log.md"
+    if fixlog_path.exists():
+        md += "\n## 6. 修復紀錄（Lab4：#11 / #13 / #14，一次一項）\n\n" + fixlog_path.read_text(encoding="utf-8")
     report_path.write_text(md, encoding="utf-8")
     print(f"written {report_path}（前端推論 {fe_funcs} 函式 / {fe_loc} 行）")
 

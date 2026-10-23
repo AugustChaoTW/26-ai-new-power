@@ -4,7 +4,7 @@
 
 針對 `docs/`（瀏覽器端 JS/HTML）與 `scripts/`（部署建置腳本）執行之靜態檢查彙整：
 ESLint + eslint-plugin-sonarjs（門檻 complexity 10 / max-depth 3 / max-lines-per-function 50 / cognitive-complexity 15）、jscpd（重複率，min-tokens 50）、knip（死碼）。
-生成時間：**2026-10-23 05:47 UTC**；產出水準：只搬真實數字，未重算未修改任何程式。
+生成時間：**2026-10-23 06:12 UTC**；產出水準：只搬真實數字，未重算未修改任何程式。
 
 ## 1. 警告總數（依規則分組）
 
@@ -78,3 +78,15 @@ eslint 違規總數：**0**。
 [11]: https://github.com/AugustChaoTW/26-ai-new-power/issues/11
 [12]: https://github.com/AugustChaoTW/26-ai-new-power/issues/12
 [13]: https://github.com/AugustChaoTW/26-ai-new-power/issues/13
+
+## 6. 修復紀錄（Lab4：#11 / #13 / #14，一次一項）
+
+<!-- 修復紀錄：新增條目請加在最下方（生成器會全文附到 smell-report.md 的 §6） -->
+
+### 基線（修復前）
+
+- 日期：2026-10-23（commit `1f5703a` 之後）
+- eslint：**0** 違規（complexity 10 / max-depth 3 / max-lines-per-function 50 / cognitive 15）
+- jscpd：**3.91%**（token 計 8.12%），**12** 個重複片段（markup 7 + python 5）＝ #11
+- knip：**0** 項（#13 舊文寫 1 項為過期數字，最新為 0）
+- 測試數：Python pytest **50**（50 passed）+ 前端 golden **6**（6/6，tol 1e-6）＝ 合計 **56**，全綠 ✅
