@@ -101,6 +101,13 @@
     <p>模型參數於 Python（scikit-learn，random_state=42）訓練後直接複製到前端，所有推論皆在瀏覽器本地運算，無後端伺服器。</p>
   </div>
 
+  <!-- 共用結果區 -->
+  <section class="card">
+    <p class="eyebrow">Result</p>
+    <h2 id="result-title">推論結果</h2>
+    <div id="result"><p class="muted">請於下方任一表單輸入數值並送出，結果將顯示在此。<br>回上送出後結果會即時更新此區。</p></div>
+  </section>
+
   <!-- Iris 鳶尾花分類 -->
   <section class="card">
     <p class="eyebrow">Iris 分類</p>
@@ -133,13 +140,6 @@
       <div class="field"><label for="tool_wear">刀具磨耗 (min)</label><input type="number" step="1" id="tool_wear" name="tool_wear" value="0" required></div>
       <button type="submit">預測故障機率</button>
     </form>
-  </section>
-
-  <!-- 共用結果區 -->
-  <section class="card">
-    <p class="eyebrow">Result</p>
-    <h2 id="result-title">推論結果</h2>
-    <div id="result"><p class="muted">請於上方任一表單輸入數值並送出，結果將顯示在此。</p></div>
   </section>
 
   <div class="note">
