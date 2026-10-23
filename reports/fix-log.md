@@ -31,3 +31,9 @@
 - **修了什麼**：無需新增修改——**已被修復項 1/3 的常數抽取一併消除**（原片段 #8–#11 為模板間重複貼上的 CSS 文字、#12 為重複 nav 文字；抽取 SITE_CSS / REPORT_CSS / build_nav_html 後源頭只剩單一定義）。jSCPD 褪掃驗證 `scripts/` 內 python 配對數 = **0**。
 - **警告數變化（jscpd, min-tokens 50）**：維持 **0 片段 0.00%**（bash / javascript / json / markup / python 全格式 0）
 - **測試數**：pytest 50 passed ✅ + golden 6/6 ✅（56 全綠，同修復項 3 之程式碼狀態）；eslint 0；knip 0
+
+### 修復項 5（#13 + #14）：基線數字修正與 golden 回歸收官 — 2026-10-23
+
+- **修了什麼**：#13 基線單更新為本輪收斂後最新數字（eslint 0 / jscpd 0.00%·0 片段 / knip 0 項——舊文 knip=1 為 #12 前的過期數字）並結案；#14 補上 5 輪重構的回歸矩陣（pytest 50✅ + golden 6/6✅ × 5 輪，全程未動斷言、未 patch lint）並結案；#11 補結案留言。全程無新程式碼修改、無新警告引入。
+- **警告數變化（jscpd）**：維持 **0 片段 0.00%**；eslint 0；knip 0
+- **測試數**：pytest 50 passed ✅ + golden 6/6 ✅（56 全綠，最終確認）
