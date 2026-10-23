@@ -198,5 +198,10 @@
 
   var resultTitle;
   var result;
+  /* 黃金測試介面（不改推論邏輯）：tests/golden.test.js 以同樣 3 筆輸入比對 tests/golden.json，
+   * 機率誤差須 < 1e-6。瀏覽器掛在 window；Node 測試以 global.window = global 載入後取用。 */
+  if (typeof window !== 'undefined') {
+    window.PREDICT_API = { predict_iris: predict_iris, predict_ai4i: predict_ai4i };
+  }
   wireEvents();
 })();

@@ -1,0 +1,163 @@
+{
+  "generated_utc": "2026-10-23 05:46 UTC",
+  "generator": "scripts/export_golden.py（sklearn predict_proba，random_state=42）",
+  "models": {
+    "iris": "iris_analysis.model: MLPClassifier(16,8) relu adam alpha=1e-4 lr=0.01 seed=42",
+    "ai4i": "ai4i_analysis.model: MLPClassifier(16,8) logistic adam seed=42, 28x 類別權重"
+  },
+  "tolerance": 1e-06,
+  "param_sync_max_diff": {
+    "iris": {
+      "scalerMean": 0.0,
+      "scalerScale": 0.0,
+      "coefs": 0.0,
+      "intercepts": 0.0
+    },
+    "ai4i": {
+      "scalerMean": 0.0,
+      "scalerScale": 0.0,
+      "coefs": 0.0,
+      "intercepts": 0.0
+    }
+  },
+  "iris": {
+    "feature_names": [
+      "sepal_length",
+      "sepal_width",
+      "petal_length",
+      "petal_width"
+    ],
+    "classes": [
+      "setosa",
+      "versicolor",
+      "virginica"
+    ],
+    "cases": [
+      {
+        "input": [
+          5.1,
+          3.5,
+          1.4,
+          0.2
+        ],
+        "class_index": 0,
+        "class_name": "setosa",
+        "probs": [
+          0.9999975020328522,
+          2.0159872978174916e-06,
+          4.819798500684789e-07
+        ]
+      },
+      {
+        "input": [
+          5.9,
+          2.7,
+          4.2,
+          1.3
+        ],
+        "class_index": 1,
+        "class_name": "versicolor",
+        "probs": [
+          1.4655612388416585e-09,
+          0.9999999984722929,
+          6.214574380623668e-11
+        ]
+      },
+      {
+        "input": [
+          6.8,
+          3.0,
+          5.5,
+          2.1
+        ],
+        "class_index": 2,
+        "class_name": "virginica",
+        "probs": [
+          5.573342235519983e-07,
+          3.204572913488188e-05,
+          0.9999673969366416
+        ]
+      }
+    ]
+  },
+  "ai4i": {
+    "feature_names": [
+      "Air temperature [K]",
+      "Process temperature [K]",
+      "Rotational speed [rpm]",
+      "Torque [Nm]",
+      "Tool wear [min]",
+      "Type_H",
+      "Type_L",
+      "Type_M"
+    ],
+    "cases": [
+      {
+        "raw": {
+          "Type": "M",
+          "Air temperature [K]": 298.1,
+          "Process temperature [K]": 308.6,
+          "Rotational speed [rpm]": 1551.0,
+          "Torque [Nm]": 42.8,
+          "Tool wear [min]": 0.0
+        },
+        "input": [
+          298.1,
+          308.6,
+          1551.0,
+          42.8,
+          0.0,
+          0,
+          0,
+          1
+        ],
+        "true_failure": 0,
+        "p_failure": 0.0014366294322271632
+      },
+      {
+        "raw": {
+          "Type": "L",
+          "Air temperature [K]": 303.7,
+          "Process temperature [K]": 312.8,
+          "Rotational speed [rpm]": 1832.0,
+          "Torque [Nm]": 23.6,
+          "Tool wear [min]": 35.0
+        },
+        "input": [
+          303.7,
+          312.8,
+          1832.0,
+          23.6,
+          35.0,
+          0,
+          1,
+          0
+        ],
+        "true_failure": 0,
+        "p_failure": 0.001384452227188837
+      },
+      {
+        "raw": {
+          "Type": "M",
+          "Air temperature [K]": 299.0,
+          "Process temperature [K]": 308.7,
+          "Rotational speed [rpm]": 1500.0,
+          "Torque [Nm]": 40.2,
+          "Tool wear [min]": 30.0
+        },
+        "input": [
+          299.0,
+          308.7,
+          1500.0,
+          40.2,
+          30.0,
+          0,
+          0,
+          1
+        ],
+        "true_failure": 0,
+        "p_failure": 0.0028644204663882938
+      }
+    ]
+  }
+}
