@@ -4,7 +4,7 @@
 
 針對 `docs/`（瀏覽器端 JS/HTML）與 `scripts/`（部署建置腳本）執行之靜態檢查彙整：
 ESLint + eslint-plugin-sonarjs（門檻 complexity 10 / max-depth 3 / max-lines-per-function 50 / cognitive-complexity 15）、jscpd（重複率，min-tokens 50）、knip（死碼）。
-生成時間：**2026-10-23 06:26 UTC**；產出水準：只搬真實數字，未重算未修改任何程式。
+生成時間：**2026-10-23 06:30 UTC**；產出水準：只搬真實數字，未重算未修改任何程式。
 
 ## 1. 警告總數（依規則分組）
 
@@ -86,3 +86,9 @@ eslint 違規總數：**0**。
 - **修了什麼**：`scripts/build_docs.py` 新增 `SITE_CSS` 常數（兩頁共用的 `:root` 主題變數、基礎排版、毛玻璃 nav CSS），生成 `docs/site.css`；index/inference 改用 `<link rel="stylesheet" href="site.css">`，模板中的共用 CSS 文字移除；nav HTML 加上等價但可區分的 class 記號（`nav-item`/`nav-link`）與等價語意的結構微調（`<title>` 提前、`<span class="links">`→`<div class="links">`）。視覺與互動行為等價；app.js / 測試未動。
 - **警告數變化（jscpd, min-tokens 50）**：12 片段 3.91% → **1 片段 1.29%**（消滅 12 個中的 11 個：群組 A 的 4 個之外，inference⇄report 的 #5–6 與 build_docs.py 內部的 #8–12 因 CSS 外部化一併消失，無新增 clone）
 - **測試數**：pytest 50 passed ✅ + golden 6/6 ✅（合計 56 全綠）；eslint 0；knip 0
+
+### 修復項 2（#11 群組 B）：inference ⇄ report 重複消除 — 2026-10-23
+
+- **修了什麼**：無需新增修改——**已被修復項 1 的 `SITE_CSS` 外部化一併消除**（原片段 #5 導覽列 HTML、#6 主題色/表格區塊皆因共用 CSS 不再內嵌於兩頁而消失）。jSCPD 褪掃驗證 `inference.html ⇄ report.html` 配對數 = **0**。
+- **警告數變化（jscpd, min-tokens 50）**：維持 **1 片段 1.29%**（僅剩 report⇄smell chrome，屬修復項 3）
+- **測試數**：pytest 50 passed ✅ + golden 6/6 ✅（56 全綠）；eslint 0；knip 0
