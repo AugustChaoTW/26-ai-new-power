@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>程式碼氣味報告 — 26-ai-new-power</title>
+<style>
+  :root{--bg:#f5f5f7;--panel:#fff;--ink:#1d1d1f;--ink2:#6e6e73;--ink3:#86868b;--line:#e5e5ea;
+    --blue:#0071e3;--grad1:#ff6a3d;--grad2:#c155ec;--grad3:#3a7bfd}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.75;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
+      "Helvetica Neue","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+    -webkit-font-smoothing:antialiased;letter-spacing:.01em}
+  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;
+    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}
+  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;
+    justify-content:space-between;padding:0 24px}
+  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}
+  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none}
+  nav .links a:hover{color:var(--ink)}
+  main{max-width:820px;margin:0 auto;padding:100px 24px 80px}
+  h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;
+    background:linear-gradient(96deg,var(--grad1),var(--grad2) 45%,var(--grad3));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font-size:1.7rem;font-weight:700;letter-spacing:-.01em;margin:44px 0 12px}
+  h3{font-size:1.15rem;font-weight:700;margin:26px 0 10px}
+  p{font-size:1rem;color:var(--ink)}
+  em{color:var(--ink2);font-size:.9rem}
+  img{max-width:100%;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,.06),0 12px 32px rgba(0,0,0,.05);
+    margin:18px auto;display:block;transition:transform .35s ease, box-shadow .35s ease}
+  img:hover{transform:scale(1.015);box-shadow:0 8px 28px rgba(0,0,0,.11)}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;margin:14px 0;
+    border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);
+    font-variant-numeric:tabular-nums}
+  th{background:#f2f2f4;color:var(--ink2);font-weight:600;font-size:.82rem}
+  td{background:var(--panel)}
+  code{background:#ececf0;border-radius:6px;padding:2px 7px;font-size:.88em}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  ol{color:var(--ink2);font-size:.95rem}
+  hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#000;--panel:#1c1c1e;--ink:#f5f5f7;--ink2:#a1a1a6;--ink3:#6f6f76;--line:#2c2c2e}
+    nav{background:rgba(22,22,23,.72);border-bottom:1px solid rgba(255,255,255,.08)}
+    th{background:#111114}td{background:transparent}
+  }
+</style>
+</head>
+<body>
+<nav><div class="inner"><a class="brand" href="index.html">26-ai-new-power</a><span class="links"><a href="index.html">分析總覽</a><a href="report.html">論文</a><a href="smell.html">氣味報告</a><a href="inference.html">互動推論</a></span></div></nav>
+
+<main><!-- 生成：scripts/generate_smell_report.py，來源 outputs/static-checks；勿手改數字 -->
+
+<h1>程式碼氣味報告（smell report）</h1>
+<p>針對 <code>docs/</code>（瀏覽器端 JS/HTML）與 <code>scripts/</code>（部署建置腳本）執行之靜態檢查彙整：
+ESLint + eslint-plugin-sonarjs（門檻 complexity 10 / max-depth 3 / max-lines-per-function 50 / cognitive-complexity 15）、jscpd（重複率，min-tokens 50）、knip（死碼）。
+生成時間：<strong>2026-10-23 05:32 UTC</strong>；產出水準：只搬真實數字，未重算未修改任何程式。</p>
+<h2>1. 警告總數（依規則分組）</h2>
+<p>eslint 違規總數：<strong>0</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>規則</th>
+<th style="text-align: right;">數量</th>
+<th>位置（最多列 5）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>（無任何違規）</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>門檻設定位置：<code>eslint.config.mjs</code>（browser/node 兩組範圍分開宣告全域）。</p>
+<h2>2. 重複率與重複片段位置</h2>
+<p>掃描範圍：<code>docs/</code> + <code>scripts/</code>。複製率 <strong>3.11%</strong>（以 token 計 <strong>5.54%</strong>），共 11 個重複片段。</p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th style="text-align: right;">重複片段</th>
+<th>重複行數 / 總行數</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bash</td>
+<td style="text-align: right;">0</td>
+<td>0 / 61</td>
+</tr>
+<tr>
+<td>javascript</td>
+<td style="text-align: right;">0</td>
+<td>0 / 336</td>
+</tr>
+<tr>
+<td>json</td>
+<td style="text-align: right;">0</td>
+<td>0 / 839</td>
+</tr>
+<tr>
+<td>markup</td>
+<td style="text-align: right;">6</td>
+<td>60 / 860</td>
+</tr>
+<tr>
+<td>python</td>
+<td style="text-align: right;">5</td>
+<td>38 / 1055</td>
+</tr>
+</tbody>
+</table>
+<p><strong>重複片段位置</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">#</th>
+<th>位置 A</th>
+<th>位置 B</th>
+<th>tokens / 行數</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td><code>index.html:6-11</code></td>
+<td><code>inference.html:6-11</code></td>
+<td>92 / 6</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td><code>index.html:11-19</code></td>
+<td><code>inference.html:12-20</code></td>
+<td>100 / 9</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td><code>index.html:22-31</code></td>
+<td><code>inference.html:22-30</code></td>
+<td>232 / 10</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td><code>index.html:106-114</code></td>
+<td><code>inference.html:92-100</code></td>
+<td>50 / 9</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td><code>inference.html:20-29</code></td>
+<td><code>report.html:14-21</code></td>
+<td>208 / 10</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td><code>inference.html:84-99</code></td>
+<td><code>report.html:48-54</code></td>
+<td>97 / 16</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td><code>build_docs.py:204-211</code></td>
+<td><code>build_docs.py:538-547</code></td>
+<td>208 / 8</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td><code>build_docs.py:205-211</code></td>
+<td><code>build_docs.py:288-295</code></td>
+<td>207 / 7</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td><code>build_docs.py:278-285</code></td>
+<td><code>build_docs.py:531-538</code></td>
+<td>99 / 8</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td><code>build_docs.py:294-299</code></td>
+<td><code>build_docs.py:546-550</code></td>
+<td>74 / 6</td>
+</tr>
+<tr>
+<td style="text-align: right;">11</td>
+<td><code>build_docs.py:372-380</code></td>
+<td><code>build_docs.py:610-618</code></td>
+<td>50 / 9</td>
+</tr>
+</tbody>
+</table>
+<h2>3. 未使用的檔案與函式</h2>
+<p>掃描範圍：<code>knip.json</code> entry = <code>docs/app.js</code>、<code>docs/trained_params.js</code>、<code>scripts/run_static_checks.sh</code>。</p>
+<p><strong>未使用項目：0</strong>（無未使用檔案、未使用匯出/函式、未使用相依）</p>
+<blockquote>
+<p>註：此前曾偵測 <code>jscpd</code> devDependency「未使用」，原因是工具以 <code>npx</code> 呼叫未被 knip 看見；補上 <code>package.json</code> npm scripts（<code>checks:eslint</code> / <code>checks:jscpd</code> / <code>checks:knip</code>）後歸零，過程見 [#12]。(https://github.com/AugustChaoTW/26-ai-new-power/issues/12)</p>
+</blockquote>
+<h2>4. 前端推論相關程式</h2>
+<p>「前端推論」＝使用者在瀏覽器輸入參數、由 <code>app.js</code> 以 Python 訓練好的參數做前向傳播的整組程式，組成與統計如下（行數含 HTML 版面；註：<code>index.html</code> 只列出連結、不含推論程式）。</p>
+<table>
+<thead>
+<tr>
+<th>檔案</th>
+<th>角色</th>
+<th style="text-align: right;">總行數</th>
+<th style="text-align: right;">非空白行</th>
+<th>函式（具名 / 匿名）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docs/inference.html</code></td>
+<td>表單與版面（JS 皆在外部 app.js）</td>
+<td style="text-align: right;">154</td>
+<td style="text-align: right;">143</td>
+<td>0 / 0</td>
+</tr>
+<tr>
+<td><code>docs/app.js</code></td>
+<td>標準化＋前向傳播＋渲染（推論核心）</td>
+<td style="text-align: right;">202</td>
+<td style="text-align: right;">184</td>
+<td>17 / 2</td>
+</tr>
+<tr>
+<td><code>docs/trained_params.js</code></td>
+<td>模型參數資料（Python 逐字複製）</td>
+<td style="text-align: right;">134</td>
+<td style="text-align: right;">133</td>
+<td>0 / 0</td>
+</tr>
+<tr>
+<td><code>docs/index.html</code></td>
+<td>推論結果分頁（僅連結，不含推論程式）</td>
+<td style="text-align: right;">248</td>
+<td style="text-align: right;">227</td>
+<td>0 / 0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>小計：前端推論相關檔案 4 個，共 738 行；其中 JavaScript 推論核心 <code>app.js</code> 含 19 個函式。</strong></p>
+<h2>5. 觸發的追蹤單</h2>
+<ul>
+<li><a href="https://github.com/AugustChaoTW/26-ai-new-power/issues/11">#11</a> jscpd 重複片段追蹤單——OPEN（重跑指令：<code>bash scripts/run_static_checks.sh</code>）</li>
+<li><a href="https://github.com/AugustChaoTW/26-ai-new-power/issues/12">#12</a> knip 死碼 1 項 ——已解決 CLOSED</li>
+<li><a href="https://github.com/AugustChaoTW/26-ai-new-power/issues/13">#13</a> 基線摘要——OPEN（持續更新）</li>
+</ul></main>
+</body>
+</html>

@@ -1,0 +1,80 @@
+{
+ "issues": {
+  "eslint": [],
+  "jscpd": [],
+  "knip": [],
+  "eslint_total": 0,
+  "jscpd_percentage": 2.31,
+  "jscpd_total_files": 0,
+  "jscpd_clones": [
+   {
+    "first": "index.html:6-11",
+    "second": "inference.html:6-11",
+    "tokens": 92,
+    "lines": 6
+   },
+   {
+    "first": "index.html:11-19",
+    "second": "inference.html:12-20",
+    "tokens": 100,
+    "lines": 9
+   },
+   {
+    "first": "index.html:22-31",
+    "second": "inference.html:22-30",
+    "tokens": 232,
+    "lines": 10
+   },
+   {
+    "first": "index.html:106-114",
+    "second": "inference.html:92-100",
+    "tokens": 50,
+    "lines": 9
+   },
+   {
+    "first": "inference.html:20-29",
+    "second": "report.html:14-21",
+    "tokens": 208,
+    "lines": 10
+   },
+   {
+    "first": "inference.html:84-99",
+    "second": "report.html:48-54",
+    "tokens": 97,
+    "lines": 16
+   },
+   {
+    "first": "build_docs.py:204-211",
+    "second": "build_docs.py:538-547",
+    "tokens": 208,
+    "lines": 8
+   },
+   {
+    "first": "build_docs.py:205-211",
+    "second": "build_docs.py:288-295",
+    "tokens": 207,
+    "lines": 7
+   },
+   {
+    "first": "build_docs.py:278-285",
+    "second": "build_docs.py:531-538",
+    "tokens": 99,
+    "lines": 8
+   },
+   {
+    "first": "build_docs.py:294-299",
+    "second": "build_docs.py:546-550",
+    "tokens": 74,
+    "lines": 6
+   },
+   {
+    "first": "build_docs.py:372-380",
+    "second": "build_docs.py:610-618",
+    "tokens": 50,
+    "lines": 9
+   }
+  ],
+  "knip_items": []
+ },
+ "created": []
+}

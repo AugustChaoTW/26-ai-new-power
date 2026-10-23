@@ -1,0 +1,499 @@
+{
+  "duplicates": [
+    {
+      "firstFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 54,
+          "line": 11,
+          "position": 389
+        },
+        "name": "index.html",
+        "start": 6,
+        "startLoc": {
+          "column": 39,
+          "line": 6,
+          "position": 176
+        }
+      },
+      "format": "markup",
+      "fragment": "<title>26-ai-new-power — 分析總覽</title>\n<style>\n  :root{\n    --bg:#f5f5f7; --panel:#ffffff; --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#86868b;\n    --line:#e5e5ea; --blue:#0071e3; --radius:22px;\n    --grad1:#ff6a3d; --grad2:#c155ec; --grad3:#3a7bfd;",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 6,
+      "secondFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 54,
+          "line": 11,
+          "position": 395
+        },
+        "name": "inference.html",
+        "start": 6,
+        "startLoc": {
+          "column": 45,
+          "line": 6,
+          "position": 182
+        }
+      },
+      "tokens": 92
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 17,
+          "line": 19,
+          "position": 767
+        },
+        "name": "index.html",
+        "start": 11,
+        "startLoc": {
+          "column": 53,
+          "line": 11,
+          "position": 388
+        }
+      },
+      "format": "markup",
+      "fragment": "    --grad1:#ff6a3d; --grad2:#c155ec; --grad3:#3a7bfd;\n  }\n  *{box-sizing:border-box}\n  html{scroll-behavior:smooth}\n  body{margin:0;background:var(--bg);color:var(--ink);\n    font-family:-apple-system,BlinkMacSystemFont,\"SF Pro Display\",\"SF Pro Text\",\n      \"Helvetica Neue\",\"PingFang TC\",\"Microsoft JhengHei\",\"Noto Sans TC\",sans-serif;\n    -webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em}\n  main{max-width:1040px;margin:0 auto;padding:120px 24px 80px}",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 9,
+      "secondFile": {
+        "end": 20,
+        "endLoc": {
+          "column": 17,
+          "line": 20,
+          "position": 807
+        },
+        "name": "inference.html",
+        "start": 12,
+        "startLoc": {
+          "column": 32,
+          "line": 12,
+          "position": 428
+        }
+      },
+      "tokens": 100
+    },
+    {
+      "firstFile": {
+        "end": 31,
+        "endLoc": {
+          "column": 38,
+          "line": 31,
+          "position": 1470
+        },
+        "name": "index.html",
+        "start": 22,
+        "startLoc": {
+          "column": 2,
+          "line": 22,
+          "position": 843
+        }
+      },
+      "format": "markup",
+      "fragment": "  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;\n    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);\n    -webkit-backdrop-filter:saturate(180%) blur(20px);\n    border-bottom:1px solid rgba(0,0,0,.08)}\n  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;\n    justify-content:space-between;padding:0 24px}\n  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}\n  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none;\n    transition:color .25s ease}\n  nav .links a:hover{color:var(--ink)}",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 10,
+      "secondFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 38,
+          "line": 30,
+          "position": 1477
+        },
+        "name": "inference.html",
+        "start": 22,
+        "startLoc": {
+          "column": 2,
+          "line": 22,
+          "position": 855
+        }
+      },
+      "tokens": 232
+    },
+    {
+      "firstFile": {
+        "end": 114,
+        "endLoc": {
+          "column": 8,
+          "line": 114,
+          "position": 5551
+        },
+        "name": "index.html",
+        "start": 106,
+        "startLoc": {
+          "column": 29,
+          "line": 106,
+          "position": 5403
+        }
+      },
+      "format": "markup",
+      "fragment": "    <a href=\"#figures\">圖表</a>\n    <a href=\"report.html\">論文</a>\n    <a href=\"inference.html\">互動推論</a>\n  </span>\n</div></nav>\n\n<main>\n  <div class=\"hero\">\n    <h1>從資料到洞察。<br>一步到位。</h1>",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 9,
+      "secondFile": {
+        "end": 100,
+        "endLoc": {
+          "column": 8,
+          "line": 100,
+          "position": 5108
+        },
+        "name": "inference.html",
+        "start": 92,
+        "startLoc": {
+          "column": 37,
+          "line": 92,
+          "position": 4960
+        }
+      },
+      "tokens": 50
+    },
+    {
+      "firstFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 87,
+          "line": 29,
+          "position": 1410
+        },
+        "name": "inference.html",
+        "start": 20,
+        "startLoc": {
+          "column": 60,
+          "line": 20,
+          "position": 850
+        }
+      },
+      "format": "markup",
+      "fragment": "  main{max-width:760px;margin:0 auto;padding:120px 24px 80px}\n\n  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;\n    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);\n    -webkit-backdrop-filter:saturate(180%) blur(20px);\n    border-bottom:1px solid rgba(0,0,0,.08)}\n  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;\n    justify-content:space-between;padding:0 24px}\n  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}\n  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none;transition:color .25s ease}",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 10,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 87,
+          "line": 21,
+          "position": 1236
+        },
+        "name": "report.html",
+        "start": 14,
+        "startLoc": {
+          "column": 59,
+          "line": 14,
+          "position": 682
+        }
+      },
+      "tokens": 208
+    },
+    {
+      "firstFile": {
+        "end": 99,
+        "endLoc": {
+          "column": 3,
+          "line": 99,
+          "position": 5082
+        },
+        "name": "inference.html",
+        "start": 84,
+        "startLoc": {
+          "column": 36,
+          "line": 84,
+          "position": 4788
+        }
+      },
+      "format": "markup",
+      "fragment": "    form input:focus{background:#000}\n  }\n</style>\n</head>\n<body>\n<nav><div class=\"inner\">\n  <a class=\"brand\" href=\"index.html\">26-ai-new-power</a>\n  <span class=\"links\">\n    <a href=\"index.html\">分析總覽</a>\n    <a href=\"report.html\">論文</a>\n    <a href=\"inference.html\">互動推論</a>\n  </span>\n</div></nav>\n\n<main>\n  <div class=\"hero\">",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 16,
+      "secondFile": {
+        "end": 54,
+        "endLoc": {
+          "column": 7,
+          "line": 54,
+          "position": 3240
+        },
+        "name": "report.html",
+        "start": 48,
+        "startLoc": {
+          "column": 51,
+          "line": 48,
+          "position": 2975
+        }
+      },
+      "tokens": 97
+    },
+    {
+      "firstFile": {
+        "end": 211,
+        "endLoc": {
+          "column": 87,
+          "line": 211,
+          "position": 8007
+        },
+        "name": "build_docs.py",
+        "start": 204,
+        "startLoc": {
+          "column": 59,
+          "line": 204,
+          "position": 7453
+        }
+      },
+      "format": "python",
+      "fragment": "    -webkit-font-smoothing:antialiased;letter-spacing:.01em}\n  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;\n    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);\n    -webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}\n  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;\n    justify-content:space-between;padding:0 24px}\n  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}\n  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none}",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 8,
+      "secondFile": {
+        "end": 547,
+        "endLoc": {
+          "column": 87,
+          "line": 547,
+          "position": 24052
+        },
+        "name": "build_docs.py",
+        "start": 538,
+        "startLoc": {
+          "column": 60,
+          "line": 538,
+          "position": 23492
+        }
+      },
+      "tokens": 208
+    },
+    {
+      "firstFile": {
+        "end": 211,
+        "endLoc": {
+          "column": 87,
+          "line": 211,
+          "position": 8007
+        },
+        "name": "build_docs.py",
+        "start": 205,
+        "startLoc": {
+          "column": 2,
+          "line": 205,
+          "position": 7457
+        }
+      },
+      "format": "python",
+      "fragment": "  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;\n    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);\n    -webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}\n  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;\n    justify-content:space-between;padding:0 24px}\n  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}\n  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none}",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 7,
+      "secondFile": {
+        "end": 295,
+        "endLoc": {
+          "column": 87,
+          "line": 295,
+          "position": 12291
+        },
+        "name": "build_docs.py",
+        "start": 288,
+        "startLoc": {
+          "column": 2,
+          "line": 288,
+          "position": 11736
+        }
+      },
+      "tokens": 207
+    },
+    {
+      "firstFile": {
+        "end": 285,
+        "endLoc": {
+          "column": 17,
+          "line": 285,
+          "position": 11660
+        },
+        "name": "build_docs.py",
+        "start": 278,
+        "startLoc": {
+          "column": 2,
+          "line": 278,
+          "position": 11285
+        }
+      },
+      "format": "python",
+      "fragment": "  }\n  *{box-sizing:border-box}\n  html{scroll-behavior:smooth}\n  body{margin:0;background:var(--bg);color:var(--ink);\n    font-family:-apple-system,BlinkMacSystemFont,\"SF Pro Display\",\"SF Pro Text\",\n      \"Helvetica Neue\",\"PingFang TC\",\"Microsoft JhengHei\",\"Noto Sans TC\",sans-serif;\n    -webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em}\n  main{max-width:1040px;margin:0 auto;padding:120px 24px 80px}",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 8,
+      "secondFile": {
+        "end": 538,
+        "endLoc": {
+          "column": 17,
+          "line": 538,
+          "position": 23449
+        },
+        "name": "build_docs.py",
+        "start": 531,
+        "startLoc": {
+          "column": 2,
+          "line": 531,
+          "position": 23074
+        }
+      },
+      "tokens": 99
+    },
+    {
+      "firstFile": {
+        "end": 299,
+        "endLoc": {
+          "column": 3,
+          "line": 299,
+          "position": 12368
+        },
+        "name": "build_docs.py",
+        "start": 294,
+        "startLoc": {
+          "column": 46,
+          "line": 294,
+          "position": 12165
+        }
+      },
+      "format": "python",
+      "fragment": "  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}\n  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none;\n    transition:color .25s ease}\n  nav .links a:hover{color:var(--ink)}\n\n  /* Hero */",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 6,
+      "secondFile": {
+        "end": 550,
+        "endLoc": {
+          "column": 3,
+          "line": 550,
+          "position": 24124
+        },
+        "name": "build_docs.py",
+        "start": 546,
+        "startLoc": {
+          "column": 46,
+          "line": 546,
+          "position": 23926
+        }
+      },
+      "tokens": 74
+    },
+    {
+      "firstFile": {
+        "end": 380,
+        "endLoc": {
+          "column": 8,
+          "line": 380,
+          "position": 16444
+        },
+        "name": "build_docs.py",
+        "start": 372,
+        "startLoc": {
+          "column": 29,
+          "line": 372,
+          "position": 16296
+        }
+      },
+      "format": "python",
+      "fragment": "    <a href=\"#figures\">圖表</a>\n    <a href=\"report.html\">論文</a>\n    <a href=\"inference.html\">互動推論</a>\n  </span>\n</div></nav>\n\n<main>\n  <div class=\"hero\">\n    <h1>從資料到洞察。<br>一步到位。</h1>",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 9,
+      "secondFile": {
+        "end": 618,
+        "endLoc": {
+          "column": 8,
+          "line": 618,
+          "position": 27750
+        },
+        "name": "build_docs.py",
+        "start": 610,
+        "startLoc": {
+          "column": 37,
+          "line": 610,
+          "position": 27602
+        }
+      },
+      "tokens": 50
+    }
+  ],
+  "statistics": {
+    "detectionDate": "2026-10-23T05:30:51.136Z",
+    "formats": {
+      "bash": {
+        "clones": 0,
+        "duplicatedLines": 0,
+        "duplicatedTokens": 0,
+        "lines": 61,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 0.0,
+        "percentageTokens": 0.0,
+        "sources": 1,
+        "tokens": 244
+      },
+      "javascript": {
+        "clones": 0,
+        "duplicatedLines": 0,
+        "duplicatedTokens": 0,
+        "lines": 336,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 0.0,
+        "percentageTokens": 0.0,
+        "sources": 2,
+        "tokens": 2860
+      },
+      "json": {
+        "clones": 0,
+        "duplicatedLines": 0,
+        "duplicatedTokens": 0,
+        "lines": 839,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 0.0,
+        "percentageTokens": 0.0,
+        "sources": 1,
+        "tokens": 1854
+      },
+      "markup": {
+        "clones": 6,
+        "duplicatedLines": 60,
+        "duplicatedTokens": 779,
+        "lines": 860,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 6.976744186046512,
+        "percentageTokens": 7.314553990610328,
+        "sources": 3,
+        "tokens": 10650
+      },
+      "python": {
+        "clones": 5,
+        "duplicatedLines": 38,
+        "duplicatedTokens": 638,
+        "lines": 1055,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 3.6018957345971563,
+        "percentageTokens": 6.39470782800441,
+        "sources": 4,
+        "tokens": 9977
+      }
+    },
+    "total": {
+      "clones": 11,
+      "duplicatedLines": 98,
+      "duplicatedTokens": 1417,
+      "lines": 3151,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 3.1101237702316724,
+      "percentageTokens": 5.538401407074458,
+      "sources": 11,
+      "tokens": 25585
+    }
+  }
+}

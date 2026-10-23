@@ -252,11 +252,8 @@ def build_report_html(paper_path: Path) -> str:
         "<title>分析小論文 — 26-ai-new-power</title>\n"
         "<style>" + REPORT_CHROME_CSS + "</style>\n"
         "</head>\n<body>\n"
-        '<nav><div class="inner"><a class="brand" href="index.html">26-ai-new-power</a>'
-        '<span class="links"><a href="index.html">分析總覽</a>'
-        '<a href="report.html">論文</a><a href="inference.html">互動推論</a></span></div></nav>\n'
-        "<main>" + body + "</main>\n"
-        "</body>\n</html>\n"
+        + NAV_HTML + "\n<main>" + body + "</main>\n"
+        + "</body>\n</html>\n"
     )
 
 
@@ -371,6 +368,7 @@ INDEX_HTML = """<!DOCTYPE html>
     <a href="#details">細節</a>
     <a href="#figures">圖表</a>
     <a href="report.html">論文</a>
+    <a href="smell.html">氣味報告</a>
     <a href="inference.html">互動推論</a>
   </span>
 </div></nav>
@@ -421,6 +419,7 @@ INDEX_HTML = """<!DOCTYPE html>
       <ul style="margin:0;padding-left:18px">
         <li><a href="report.html">小論文全文（HTML 版）</a> — 轉換自 reports/paper.md</li>
         <li><a href="inference.html">互動推論示範（Iris / AI4I）</a> — 參數自 Python 訓練直接複製</li>
+        <li><a href="smell.html">程式碼氣味分析報告</a> — 生成自 reports/smell-report.md</li>
       </ul>
     </div>
   </div>
@@ -609,6 +608,7 @@ INFERENCE_HTML = """<!DOCTYPE html>
   <span class="links">
     <a href="index.html">分析總覽</a>
     <a href="report.html">論文</a>
+    <a href="smell.html">氣味報告</a>
     <a href="inference.html">互動推論</a>
   </span>
 </div></nav>
@@ -673,6 +673,33 @@ INFERENCE_HTML = """<!DOCTYPE html>
 """
 
 
+NAV_HTML = (
+    '<nav><div class="inner"><a class="brand" href="index.html">26-ai-new-power</a>'
+    '<span class="links"><a href="index.html">分析總覽</a>'
+    '<a href="report.html">論文</a>'
+    '<a href="smell.html">氣味報告</a>'
+    '<a href="inference.html">互動推論</a></span></div></nav>\n'
+)
+
+
+def build_smell_html(md_path: Path) -> str:
+    """reports/smell-report.md -> docs/smell.html（report 頁同一套 Apple 樣式）。"""
+    import markdown
+
+    md = markdown.Markdown(extensions=["tables"])
+    body = md.convert(md_path.read_text(encoding="utf-8"))
+    return (
+        '<!DOCTYPE html>\n<html lang="zh-Hant">\n<head>\n<meta charset="utf-8">\n'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+        "<title>程式碼氣味報告 — 26-ai-new-power</title>\n"
+        "<style>" + REPORT_CHROME_CSS + "</style>\n"
+        "</head>\n<body>\n"
+        + NAV_HTML
+        + "\n<main>" + body + "</main>\n"
+        + "</body>\n</html>\n"
+    )
+
+
 def main() -> None:
     DOCS.mkdir(parents=True, exist_ok=True)
 
@@ -707,6 +734,13 @@ def main() -> None:
     report_html = DOCS / "report.html"
     report_html.write_text(build_report_html(PAPER), encoding="utf-8")
     print(f"report.html written: {report_html}")
+
+    smell_md = ROOT / "reports" / "smell-report.md"
+    if smell_md.exists():
+        (DOCS / "smell.html").write_text(build_smell_html(smell_md), encoding="utf-8")
+        print("smell.html written: docs/smell.html")
+    else:
+        print("smell-report.md 尚未生成，略過 smell.html")
 
     (DOCS / "index.html").write_text(INDEX_HTML, encoding="utf-8")
     (DOCS / "inference.html").write_text(INFERENCE_HTML, encoding="utf-8")
