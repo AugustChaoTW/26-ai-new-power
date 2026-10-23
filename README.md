@@ -107,4 +107,9 @@ python -m pytest -q
   - `prepare_training_data()`：最小前處理 — 防洩漏特徵 5 感測器＋Type one-hot 共 8 欄、分層切分 0.2、StandardScaler 僅以訓練集 fit
   - `build_models()`：DummyClassifier 對照組 / LogisticRegression / RandomForest / MLP，皆可重現（random_state=42）
   - `train_model()`：MLP 因 sklearn 不支援 class_weight，以等效過採樣實作 {0:1, 1:28}
-  - 全套件測試：36 = iris 17 + ai4i data 8 + ai4i model 11
+- `ai4i_analysis/evaluate.py`：評估與視覺化模組（TDD，`tests/test_ai4i_evaluate.py` 10 個測試）
+  - 主指標 PR-AUC；`evaluate_model()` 回傳 PR-AUC／ROC-AUC／正類 precision/recall/F1／accuracy（對照用）／混淆矩陣／y_pred／y_score
+  - `compare_models()`：4 模型指標彙整表，以 PR-AUC 為首欄降冪排序
+  - 5 個繪圖函式輸出至 `outputs/ai4i_figures/`：PR/ROC 曲線 4 模型同圖、per-model 混淆矩陣×4、MLP loss 曲線、模型比較長條，共 8 張
+  - Dummy accuracy 陷阱示範：96.6% acc 但 PR-AUC≈0.034（=正類比例）、ROC-AUC≈0.5
+  - 全套件測試：46 = iris 17 + ai4i data 8 + model 11 + evaluate 10
