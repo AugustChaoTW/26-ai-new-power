@@ -444,6 +444,163 @@ INDEX_HTML = """<!DOCTYPE html>
 
 
 
+INFERENCE_HTML = """<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>互動推論示範 — 26-ai-new-power</title>
+<style>
+  :root{
+    --bg:#f5f5f7; --panel:#ffffff; --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#86868b;
+    --line:#e5e5ea; --blue:#0071e3; --radius:22px;
+    --grad1:#ff6a3d; --grad2:#c155ec; --grad3:#3a7bfd;
+    --ok:#1b7a3d; --warn:#d70015;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
+      "Helvetica Neue","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em}
+  main{max-width:760px;margin:0 auto;padding:120px 24px 80px}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;
+    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid rgba(0,0,0,.08)}
+  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;
+    justify-content:space-between;padding:0 24px}
+  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}
+  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none;transition:color .25s ease}
+  nav .links a:hover{color:var(--ink)}
+
+  .hero{text-align:center;padding:30px 0 34px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;letter-spacing:-.02em;margin:0 0 10px;line-height:1.1;
+    background:linear-gradient(96deg,var(--grad1) 0%,var(--grad2) 45%,var(--grad3) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--ink2);margin:0 auto;max-width:560px}
+
+  .card{background:var(--panel);border-radius:var(--radius);padding:30px 34px;margin-bottom:22px;
+    box-shadow:0 2px 12px rgba(0,0,0,.05),0 12px 32px rgba(0,0,0,.04);
+    transition:transform .35s ease, box-shadow .35s ease}
+  .card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.06),0 18px 44px rgba(0,0,0,.06)}
+  .card h2{font-size:1.35rem;font-weight:700;letter-spacing:-.01em;margin:2px 0 16px}
+  .eyebrow{color:var(--grad2);font-weight:600;font-size:.78rem;text-transform:uppercase;
+    letter-spacing:.12em;margin:0 0 4px}
+
+  form .field{display:flex;align-items:center;gap:12px;margin:12px 0}
+  form label{flex:0 0 168px;font-size:.9rem;color:var(--ink2)}
+  form input,form select{flex:1;padding:10px 14px;border:1px solid var(--line);border-radius:12px;
+    font-size:.95rem;background:#fbfbfd;color:var(--ink);font-family:inherit;
+    -webkit-font-variant-numeric:tabular-nums;transition:border-color .25s, box-shadow .25s}
+  form input:focus,form select:focus{outline:none;border-color:var(--blue);
+    box-shadow:0 0 0 3px rgba(0,113,227,.18);background:#fff}
+  button{display:inline-block;margin-top:18px;padding:11px 26px;border:none;border-radius:980px;
+    background:var(--blue);color:#fff;font-size:.95rem;font-weight:600;cursor:pointer;
+    font-family:inherit;transition:transform .3s ease, box-shadow .3s ease}
+  button:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,113,227,.35)}
+  button:active{transform:translateY(0)}
+
+  #result-title{font-size:1.35rem;font-weight:700;letter-spacing:-.01em;margin:2px 0 14px}
+  #result p{margin:10px 0}
+  #result strong{font-weight:700}
+  #result .error{color:var(--warn);margin:4px 0}
+  #result .muted{color:var(--ink3);margin:4px 0}
+  #result .verdict{font-weight:700;margin-top:14px}
+  #result .verdict.ok{color:var(--ok)}
+  #result .verdict.warn{color:var(--warn)}
+  .probs{margin-top:12px}
+  .prob-row{display:flex;align-items:center;gap:12px;margin:10px 0}
+  .prob-label{flex:0 0 128px;font-size:.88rem;color:var(--ink2)}
+  .prob-bar{flex:1;height:14px;background:#ececf0;border-radius:7px;overflow:hidden}
+  .prob-fill{height:100%;border-radius:7px;
+    background:linear-gradient(90deg,var(--grad3),var(--grad2));transition:width .5s ease}
+  .prob-val{flex:0 0 76px;text-align:right;font-size:.9rem;color:var(--ink);
+    font-variant-numeric:tabular-nums}
+
+  .note{background:var(--panel);border-radius:var(--radius);padding:18px 24px;margin-bottom:22px;
+    box-shadow:0 2px 12px rgba(0,0,0,.05);font-size:.85rem;color:var(--ink3)}
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#000;--panel:#1c1c1e;--ink:#f5f5f7;--ink2:#a1a1a6;--ink3:#6f6f76;--line:#2c2c2e;
+      --ok:#30d158;--warn:#ff453a}
+    .badge,#result .prob-bar{background:#111114}
+    nav{background:rgba(22,22,23,.72);border-bottom:1px solid rgba(255,255,255,.08)}
+    form input,form select{background:#111114}
+    form input:focus{background:#000}
+  }
+</style>
+</head>
+<body>
+<nav><div class="inner">
+  <a class="brand" href="index.html">26-ai-new-power</a>
+  <span class="links">
+    <a href="index.html">分析總覽</a>
+    <a href="report.html">論文</a>
+    <a href="inference.html">互動推論</a>
+  </span>
+</div></nav>
+
+<main>
+  <div class="hero">
+    <h1>互動式推論。</h1>
+    <p>模型參數於 Python（scikit-learn，random_state=42）訓練後直接複製到前端，所有推論皆在瀏覽器本地運算，無後端伺服器。</p>
+  </div>
+
+  <!-- Iris 鳶尾花分類 -->
+  <section class="card">
+    <p class="eyebrow">Iris 分類</p>
+    <h2>鳶尾花品種預測</h2>
+    <form id="iris-form">
+      <div class="field"><label for="sepal_length">花萼長度 (cm)</label><input type="number" step="0.1" id="sepal_length" name="sepal_length" value="5.1" required></div>
+      <div class="field"><label for="sepal_width">花萼寬度 (cm)</label><input type="number" step="0.1" id="sepal_width" name="sepal_width" value="3.5" required></div>
+      <div class="field"><label for="petal_length">花瓣長度 (cm)</label><input type="number" step="0.1" id="petal_length" name="petal_length" value="1.4" required></div>
+      <div class="field"><label for="petal_width">花瓣寬度 (cm)</label><input type="number" step="0.1" id="petal_width" name="petal_width" value="0.2" required></div>
+      <button type="submit">預測品種</button>
+    </form>
+  </section>
+
+  <!-- AI4I 2020 -->
+  <section class="card">
+    <p class="eyebrow">Predictive Maintenance</p>
+    <h2>AI4I 2020 故障機率</h2>
+    <form id="ai4i-form">
+      <div class="field"><label for="product_type">產品等級</label>
+        <select id="product_type" name="product_type">
+          <option value="H">H（高階）</option>
+          <option value="L">L（低階）</option>
+          <option value="M" selected>M（中階）</option>
+        </select>
+      </div>
+      <div class="field"><label for="air_temp">空氣溫度 (K)</label><input type="number" step="0.1" id="air_temp" name="air_temp" value="298.9" required></div>
+      <div class="field"><label for="process_temp">製程溫度 (K)</label><input type="number" step="0.1" id="process_temp" name="process_temp" value="308.9" required></div>
+      <div class="field"><label for="rot_speed">轉速 (rpm)</label><input type="number" step="1" id="rot_speed" name="rot_speed" value="1508" required></div>
+      <div class="field"><label for="torque">扭矩 (Nm)</label><input type="number" step="0.1" id="torque" name="torque" value="42.8" required></div>
+      <div class="field"><label for="tool_wear">刀具磨耗 (min)</label><input type="number" step="1" id="tool_wear" name="tool_wear" value="0" required></div>
+      <button type="submit">預測故障機率</button>
+    </form>
+  </section>
+
+  <!-- 共用結果區 -->
+  <section class="card">
+    <p class="eyebrow">Result</p>
+    <h2 id="result-title">推論結果</h2>
+    <div id="result"><p class="muted">請於上方任一表單輸入數值並送出，結果將顯示在此。</p></div>
+  </section>
+
+  <div class="note">
+    參數來源：Iris — iris_analysis/pipeline.py（MLP 4-16-8-3，測試集 accuracy 0.9333）；
+    AI4I — ai4i_analysis/model.py（MLP 8-16-8-1，activation='logistic'，測試集 accuracy 0.93）。
+    純前端推論，無任何後端或網路請求。
+  </div>
+</main>
+<script src="trained_params.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
+"""
+
+
 def main() -> None:
     DOCS.mkdir(parents=True, exist_ok=True)
 
@@ -462,22 +619,9 @@ def main() -> None:
     report_html.write_text(build_report_html(PAPER), encoding="utf-8")
     print(f"report.html written: {report_html}")
 
-    # previous inference page (built earlier) moves to inference.html
-    index_path = DOCS / "index.html"
-    inference_path = DOCS / "inference.html"
-    if index_path.exists() and "互動式推論示範" in index_path.read_text(encoding="utf-8"):
-        shutil.copy2(index_path, inference_path)
-        txt = inference_path.read_text(encoding="utf-8")
-        txt = txt.replace(
-            "模型參數於 Python（scikit-learn，random_state=42）訓練後直接複製到前端",
-            '<a href="index.html">← 回分析總覽</a>｜模型參數於 Python（scikit-learn，random_state=42）訓練後直接複製到前端',
-        )
-        inference_path.write_text(txt, encoding="utf-8")
-        index_path.write_text(INDEX_HTML, encoding="utf-8")
-        print("inference page moved to inference.html; index.html is now the overview homepage")
-    else:
-        index_path.write_text(INDEX_HTML, encoding="utf-8")
-        print("index.html overview written")
+    (DOCS / "index.html").write_text(INDEX_HTML, encoding="utf-8")
+    (DOCS / "inference.html").write_text(INFERENCE_HTML, encoding="utf-8")
+    print("index.html overview + inference.html (Apple style) written")
 
     print("done")
 
