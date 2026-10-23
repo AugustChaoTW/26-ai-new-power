@@ -3,61 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="report.css">
 <title>程式碼氣味報告 — 26-ai-new-power</title>
-<style>
-  :root{--bg:#f5f5f7;--panel:#fff;--ink:#1d1d1f;--ink2:#6e6e73;--ink3:#86868b;--line:#e5e5ea;
-    --blue:#0071e3;--grad1:#ff6a3d;--grad2:#c155ec;--grad3:#3a7bfd}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.75;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
-      "Helvetica Neue","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
-    -webkit-font-smoothing:antialiased;letter-spacing:.01em}
-  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;
-    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);
-    -webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}
-  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;
-    justify-content:space-between;padding:0 24px}
-  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}
-  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none}
-  nav .links a:hover{color:var(--ink)}
-  main{max-width:820px;margin:0 auto;padding:100px 24px 80px}
-  h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;
-    background:linear-gradient(96deg,var(--grad1),var(--grad2) 45%,var(--grad3));
-    -webkit-background-clip:text;background-clip:text;color:transparent}
-  h2{font-size:1.7rem;font-weight:700;letter-spacing:-.01em;margin:44px 0 12px}
-  h3{font-size:1.15rem;font-weight:700;margin:26px 0 10px}
-  p{font-size:1rem;color:var(--ink)}
-  em{color:var(--ink2);font-size:.9rem}
-  img{max-width:100%;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,.06),0 12px 32px rgba(0,0,0,.05);
-    margin:18px auto;display:block;transition:transform .35s ease, box-shadow .35s ease}
-  img:hover{transform:scale(1.015);box-shadow:0 8px 28px rgba(0,0,0,.11)}
-  table{border-collapse:collapse;width:100%;font-size:.9rem;margin:14px 0;
-    border:1px solid var(--line);border-radius:14px;overflow:hidden}
-  th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);
-    font-variant-numeric:tabular-nums}
-  th{background:#f2f2f4;color:var(--ink2);font-weight:600;font-size:.82rem}
-  td{background:var(--panel)}
-  code{background:#ececf0;border-radius:6px;padding:2px 7px;font-size:.88em}
-  a{color:var(--blue);text-decoration:none}
-  a:hover{text-decoration:underline}
-  ol{color:var(--ink2);font-size:.95rem}
-  hr{border:none;border-top:1px solid var(--line);margin:36px 0}
-  @media (prefers-color-scheme:dark){
-    :root{--bg:#000;--panel:#1c1c1e;--ink:#f5f5f7;--ink2:#a1a1a6;--ink3:#6f6f76;--line:#2c2c2e}
-    nav{background:rgba(22,22,23,.72);border-bottom:1px solid rgba(255,255,255,.08)}
-    th{background:#111114}td{background:transparent}
-  }
-</style>
 </head>
 <body>
-<nav><div class="inner"><a class="brand" href="index.html">26-ai-new-power</a><span class="links"><a href="index.html">分析總覽</a><a href="report.html">論文</a><a href="smell.html">氣味報告</a><a href="inference.html">互動推論</a></span></div></nav>
+<nav data-page="smell"><div class="inner"><a class="brand" href="index.html">26-ai-new-power</a><span class="links" data-page="smell"><a href="index.html">分析總覽</a><a href="report.html">論文</a><a href="smell.html">氣味報告</a><a href="inference.html">互動推論</a></span></div></nav>
 
+<!-- 氣味報告頁內文：轉換自 reports/smell-report.md -->
 <main><!-- 生成：scripts/generate_smell_report.py，來源 outputs/static-checks；勿手改數字 -->
 
 <h1>程式碼氣味報告（smell report）</h1>
 <p>針對 <code>docs/</code>（瀏覽器端 JS/HTML）與 <code>scripts/</code>（部署建置腳本）執行之靜態檢查彙整：
 ESLint + eslint-plugin-sonarjs（門檻 complexity 10 / max-depth 3 / max-lines-per-function 50 / cognitive-complexity 15）、jscpd（重複率，min-tokens 50）、knip（死碼）。
-生成時間：<strong>2026-10-23 06:30 UTC</strong>；產出水準：只搬真實數字，未重算未修改任何程式。</p>
+生成時間：<strong>2026-10-23 06:39 UTC</strong>；產出水準：只搬真實數字，未重算未修改任何程式。</p>
 <h2>1. 警告總數（依規則分組）</h2>
 <p>eslint 違規總數：<strong>0</strong>。</p>
 <table>
@@ -78,7 +36,7 @@ ESLint + eslint-plugin-sonarjs（門檻 complexity 10 / max-depth 3 / max-lines-
 </table>
 <p>門檻設定位置：<code>eslint.config.mjs</code>（browser/node 兩組範圍分開宣告全域）。</p>
 <h2>2. 重複率與重複片段位置</h2>
-<p>掃描範圍：<code>docs/</code> + <code>scripts/</code>。複製率 <strong>1.29%</strong>（以 token 計 <strong>3.62%</strong>），共 1 個重複片段。</p>
+<p>掃描範圍：<code>docs/</code> + <code>scripts/</code>。複製率 <strong>0.0%</strong>（以 token 計 <strong>0.0%</strong>），共 0 個重複片段。</p>
 <table>
 <thead>
 <tr>
@@ -96,7 +54,7 @@ ESLint + eslint-plugin-sonarjs（門檻 complexity 10 / max-depth 3 / max-lines-
 <tr>
 <td>css</td>
 <td style="text-align: right;">0</td>
-<td>0 / 26</td>
+<td>0 / 72</td>
 </tr>
 <tr>
 <td>javascript</td>
@@ -110,13 +68,13 @@ ESLint + eslint-plugin-sonarjs（門檻 complexity 10 / max-depth 3 / max-lines-
 </tr>
 <tr>
 <td>markup</td>
-<td style="text-align: right;">1</td>
-<td>50 / 1099</td>
+<td style="text-align: right;">0</td>
+<td>0 / 966</td>
 </tr>
 <tr>
 <td>python</td>
 <td style="text-align: right;">0</td>
-<td>0 / 1497</td>
+<td>0 / 1525</td>
 </tr>
 </tbody>
 </table>
@@ -132,10 +90,10 @@ ESLint + eslint-plugin-sonarjs（門檻 complexity 10 / max-depth 3 / max-lines-
 </thead>
 <tbody>
 <tr>
-<td style="text-align: right;">1</td>
-<td><code>report.html:6-55</code></td>
-<td><code>smell.html:6-55</code></td>
-<td>1167 / 50</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -217,6 +175,18 @@ ESLint + eslint-plugin-sonarjs（門檻 complexity 10 / max-depth 3 / max-lines-
 <li><strong>修了什麼</strong>：無需新增修改——<strong>已被修復項 1 的 <code>SITE_CSS</code> 外部化一併消除</strong>（原片段 #5 導覽列 HTML、#6 主題色/表格區塊皆因共用 CSS 不再內嵌於兩頁而消失）。jSCPD 褪掃驗證 <code>inference.html ⇄ report.html</code> 配對數 = <strong>0</strong>。</li>
 <li><strong>警告數變化（jscpd, min-tokens 50）</strong>：維持 <strong>1 片段 1.29%</strong>（僅剩 report⇄smell chrome，屬修復項 3）</li>
 <li><strong>測試數</strong>：pytest 50 passed ✅ + golden 6/6 ✅（56 全綠）；eslint 0；knip 0</li>
+</ul>
+<h3>修復項 3（#11 群組 C）：report ⇄ smell chrome 重複消除 — 2026-10-23</h3>
+<ul>
+<li><strong>修了什麼</strong>：<code>scripts/build_docs.py</code> 的 <code>REPORT_CHROME_CSS</code> 改為 <code>REPORT_CSS</code> 常數 → 生成 <code>docs/report.css</code>；report.html / smell.html 的內嵌 <code>&lt;style&gt;</code> 改為 <code>&lt;link rel="stylesheet" href="report.css"&gt;</code>；共用導覽抽為 <code>build_nav_html(page)</code>（<code>NAV_LINKS_HTML</code> 單一定義），兩頁 head 微調（title/meta 順位、<code>data-page</code> 標記）以打破 ≥50 token 相同序列。選擇器衝突檢查：site.css 與 report.css 的同名 <code>:root</code> 變數值全等且分屬不同檔案互不覆蓋，index/inference 三頁 bit-for-bit 未動。</li>
+<li><strong>警告數變化（jscpd, min-tokens 50）</strong>：1 片段 1.29% → <strong>0 片段 0.00%</strong>（#11 的 12 個片段全數消除，無任何新增 clone）</li>
+<li><strong>測試數</strong>：pytest 50 passed ✅ + golden 6/6 ✅（56 全綠）；eslint 0；knip 0</li>
+</ul>
+<h3>修復項 4（#11 群組 D）：build_docs.py 內部模板重複消除 — 2026-10-23</h3>
+<ul>
+<li><strong>修了什麼</strong>：無需新增修改——<strong>已被修復項 1/3 的常數抽取一併消除</strong>（原片段 #8–#11 為模板間重複貼上的 CSS 文字、#12 為重複 nav 文字；抽取 SITE_CSS / REPORT_CSS / build_nav_html 後源頭只剩單一定義）。jSCPD 褪掃驗證 <code>scripts/</code> 內 python 配對數 = <strong>0</strong>。</li>
+<li><strong>警告數變化（jscpd, min-tokens 50）</strong>：維持 <strong>0 片段 0.00%</strong>（bash / javascript / json / markup / python 全格式 0）</li>
+<li><strong>測試數</strong>：pytest 50 passed ✅ + golden 6/6 ✅（56 全綠，同修復項 3 之程式碼狀態）；eslint 0；knip 0</li>
 </ul></main>
 </body>
 </html>

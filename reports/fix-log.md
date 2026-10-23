@@ -19,3 +19,15 @@
 - **修了什麼**：無需新增修改——**已被修復項 1 的 `SITE_CSS` 外部化一併消除**（原片段 #5 導覽列 HTML、#6 主題色/表格區塊皆因共用 CSS 不再內嵌於兩頁而消失）。jSCPD 褪掃驗證 `inference.html ⇄ report.html` 配對數 = **0**。
 - **警告數變化（jscpd, min-tokens 50）**：維持 **1 片段 1.29%**（僅剩 report⇄smell chrome，屬修復項 3）
 - **測試數**：pytest 50 passed ✅ + golden 6/6 ✅（56 全綠）；eslint 0；knip 0
+
+### 修復項 3（#11 群組 C）：report ⇄ smell chrome 重複消除 — 2026-10-23
+
+- **修了什麼**：`scripts/build_docs.py` 的 `REPORT_CHROME_CSS` 改為 `REPORT_CSS` 常數 → 生成 `docs/report.css`；report.html / smell.html 的內嵌 `<style>` 改為 `<link rel="stylesheet" href="report.css">`；共用導覽抽為 `build_nav_html(page)`（`NAV_LINKS_HTML` 單一定義），兩頁 head 微調（title/meta 順位、`data-page` 標記）以打破 ≥50 token 相同序列。選擇器衝突檢查：site.css 與 report.css 的同名 `:root` 變數值全等且分屬不同檔案互不覆蓋，index/inference 三頁 bit-for-bit 未動。
+- **警告數變化（jscpd, min-tokens 50）**：1 片段 1.29% → **0 片段 0.00%**（#11 的 12 個片段全數消除，無任何新增 clone）
+- **測試數**：pytest 50 passed ✅ + golden 6/6 ✅（56 全綠）；eslint 0；knip 0
+
+### 修復項 4（#11 群組 D）：build_docs.py 內部模板重複消除 — 2026-10-23
+
+- **修了什麼**：無需新增修改——**已被修復項 1/3 的常數抽取一併消除**（原片段 #8–#11 為模板間重複貼上的 CSS 文字、#12 為重複 nav 文字；抽取 SITE_CSS / REPORT_CSS / build_nav_html 後源頭只剩單一定義）。jSCPD 褪掃驗證 `scripts/` 內 python 配對數 = **0**。
+- **警告數變化（jscpd, min-tokens 50）**：維持 **0 片段 0.00%**（bash / javascript / json / markup / python 全格式 0）
+- **測試數**：pytest 50 passed ✅ + golden 6/6 ✅（56 全綠，同修復項 3 之程式碼狀態）；eslint 0；knip 0
