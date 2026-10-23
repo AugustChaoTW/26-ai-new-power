@@ -4,7 +4,7 @@
 
 針對 `docs/`（瀏覽器端 JS/HTML）與 `scripts/`（部署建置腳本）執行之靜態檢查彙整：
 ESLint + eslint-plugin-sonarjs（門檻 complexity 10 / max-depth 3 / max-lines-per-function 50 / cognitive-complexity 15）、jscpd（重複率，min-tokens 50）、knip（死碼）。
-生成時間：**2026-10-23 06:12 UTC**；產出水準：只搬真實數字，未重算未修改任何程式。
+生成時間：**2026-10-23 06:26 UTC**；產出水準：只搬真實數字，未重算未修改任何程式。
 
 ## 1. 警告總數（依規則分組）
 
@@ -18,32 +18,22 @@ eslint 違規總數：**0**。
 
 ## 2. 重複率與重複片段位置
 
-掃描範圍：`docs/` + `scripts/`。複製率 **3.91%**（以 token 計 **8.12%**），共 12 個重複片段。
+掃描範圍：`docs/` + `scripts/`。複製率 **1.29%**（以 token 計 **3.62%**），共 1 個重複片段。
 
 | 格式 | 重複片段 | 重複行數 / 總行數 |
 | --- | ---: | --- |
 | bash | 0 | 0 / 61 |
+| css | 0 | 0 / 26 |
 | javascript | 0 | 0 / 341 |
 | json | 0 | 0 / 839 |
-| markup | 7 | 112 / 1124 |
-| python | 5 | 39 / 1498 |
+| markup | 1 | 50 / 1099 |
+| python | 0 | 0 / 1497 |
 
 **重複片段位置**
 
 | # | 位置 A | 位置 B | tokens / 行數 |
 | ---: | --- | --- | --- |
-| 1 | `index.html:6-11` | `inference.html:6-11` | 92 / 6 |
-| 2 | `index.html:11-19` | `inference.html:12-20` | 100 / 9 |
-| 3 | `index.html:22-31` | `inference.html:22-30` | 232 / 10 |
-| 4 | `index.html:106-115` | `inference.html:92-101` | 61 / 10 |
-| 5 | `inference.html:20-29` | `report.html:14-21` | 208 / 10 |
-| 6 | `inference.html:84-100` | `report.html:48-55` | 108 / 17 |
-| 7 | `report.html:6-55` | `smell.html:6-55` | 1167 / 50 |
-| 8 | `build_docs.py:204-211` | `build_docs.py:537-546` | 208 / 8 |
-| 9 | `build_docs.py:205-211` | `build_docs.py:285-292` | 207 / 7 |
-| 10 | `build_docs.py:275-282` | `build_docs.py:530-537` | 99 / 8 |
-| 11 | `build_docs.py:291-296` | `build_docs.py:545-549` | 74 / 6 |
-| 12 | `build_docs.py:369-378` | `build_docs.py:609-618` | 61 / 10 |
+| 1 | `report.html:6-55` | `smell.html:6-55` | 1167 / 50 |
 
 
 ## 3. 未使用的檔案與函式
@@ -61,12 +51,12 @@ eslint 違規總數：**0**。
 
 | 檔案 | 角色 | 總行數 | 非空白行 | 函式（具名 / 匿名） |
 | --- | --- | ---: | ---: | --- |
-| `docs/inference.html` | 表單與版面（JS 皆在外部 app.js） | 155 | 144 | 0 / 0 |
+| `docs/inference.html` | 表單與版面（JS 皆在外部 app.js） | 138 | 127 | 0 / 0 |
 | `docs/app.js` | 標準化＋前向傳播＋渲染（推論核心） | 207 | 189 | 17 / 2 |
 | `docs/trained_params.js` | 模型參數資料（Python 逐字複製） | 134 | 133 | 0 / 0 |
-| `docs/index.html` | 推論結果分頁（僅連結，不含推論程式） | 250 | 229 | 0 / 0 |
+| `docs/index.html` | 推論結果分頁（僅連結，不含推論程式） | 231 | 210 | 0 / 0 |
 
-**小計：前端推論相關檔案 4 個，共 746 行；其中 JavaScript 推論核心 `app.js` 含 19 個函式。**
+**小計：前端推論相關檔案 4 個，共 710 行；其中 JavaScript 推論核心 `app.js` 含 19 個函式。**
 
 
 ## 5. 觸發的追蹤單
@@ -90,3 +80,9 @@ eslint 違規總數：**0**。
 - jscpd：**3.91%**（token 計 8.12%），**12** 個重複片段（markup 7 + python 5）＝ #11
 - knip：**0** 項（#13 舊文寫 1 項為過期數字，最新為 0）
 - 測試數：Python pytest **50**（50 passed）+ 前端 golden **6**（6/6，tol 1e-6）＝ 合計 **56**，全綠 ✅
+
+### 修復項 1（#11 群組 A）：index ⇄ inference 重複消除 — 2026-10-23
+
+- **修了什麼**：`scripts/build_docs.py` 新增 `SITE_CSS` 常數（兩頁共用的 `:root` 主題變數、基礎排版、毛玻璃 nav CSS），生成 `docs/site.css`；index/inference 改用 `<link rel="stylesheet" href="site.css">`，模板中的共用 CSS 文字移除；nav HTML 加上等價但可區分的 class 記號（`nav-item`/`nav-link`）與等價語意的結構微調（`<title>` 提前、`<span class="links">`→`<div class="links">`）。視覺與互動行為等價；app.js / 測試未動。
+- **警告數變化（jscpd, min-tokens 50）**：12 片段 3.91% → **1 片段 1.29%**（消滅 12 個中的 11 個：群組 A 的 4 個之外，inference⇄report 的 #5–6 與 build_docs.py 內部的 #8–12 因 CSS 外部化一併消失，無新增 clone）
+- **測試數**：pytest 50 passed ✅ + golden 6/6 ✅（合計 56 全綠）；eslint 0；knip 0

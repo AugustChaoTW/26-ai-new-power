@@ -265,33 +265,14 @@ INDEX_HTML = """<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>26-ai-new-power — 分析總覽</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="site.css">
 <style>
-  :root{
-    --bg:#f5f5f7; --panel:#ffffff; --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#86868b;
-    --line:#e5e5ea; --blue:#0071e3; --radius:22px;
-    --grad1:#ff6a3d; --grad2:#c155ec; --grad3:#3a7bfd;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
-      "Helvetica Neue","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
-    -webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em}
+  /* index 專屬樣式（base/nav 等共用底層樣式見 site.css） */
   main{max-width:1040px;margin:0 auto;padding:120px 24px 80px}
 
-  /* 毛玻璃導覽列 */
-  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;
-    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);
-    -webkit-backdrop-filter:saturate(180%) blur(20px);
-    border-bottom:1px solid rgba(0,0,0,.08)}
-  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;
-    justify-content:space-between;padding:0 24px}
-  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}
-  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none;
-    transition:color .25s ease}
-  nav .links a:hover{color:var(--ink)}
+  /* 毛玻璃導覽列樣式已抽出至 site.css（兩頁共用） */
 
   /* Hero */
   .hero{text-align:center;padding:56px 0 40px}
@@ -364,12 +345,12 @@ INDEX_HTML = """<!DOCTYPE html>
 <nav><div class="inner">
   <a class="brand" href="#">26-ai-new-power</a>
   <span class="links">
-    <a href="#metrics">指標</a>
-    <a href="#details">細節</a>
-    <a href="#figures">圖表</a>
-    <a href="report.html">論文</a>
-    <a href="smell.html">氣味報告</a>
-    <a href="inference.html">互動推論</a>
+    <a class="nav-item" href="#metrics">指標</a>
+    <a class="nav-item" href="#details">細節</a>
+    <a class="nav-item" href="#figures">圖表</a>
+    <a class="nav-item" href="report.html">論文</a>
+    <a class="nav-item" href="smell.html">氣味報告</a>
+    <a class="nav-item" href="inference.html">互動推論</a>
   </span>
 </div></nav>
 
@@ -519,32 +500,15 @@ INFERENCE_HTML = """<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>互動推論示範 — 26-ai-new-power</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="site.css">
 <style>
-  :root{
-    --bg:#f5f5f7; --panel:#ffffff; --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#86868b;
-    --line:#e5e5ea; --blue:#0071e3; --radius:22px;
-    --grad1:#ff6a3d; --grad2:#c155ec; --grad3:#3a7bfd;
-    --ok:#1b7a3d; --warn:#d70015;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
-      "Helvetica Neue","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
-    -webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em}
+  /* inference 專屬樣式（base/nav 等共用底層樣式見 site.css） */
+  :root{--ok:#1b7a3d; --warn:#d70015}
   main{max-width:760px;margin:0 auto;padding:120px 24px 80px}
 
-  nav{position:fixed;top:0;left:0;right:0;z-index:10;height:52px;
-    background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);
-    -webkit-backdrop-filter:saturate(180%) blur(20px);
-    border-bottom:1px solid rgba(0,0,0,.08)}
-  nav .inner{max-width:1040px;margin:0 auto;height:100%;display:flex;align-items:center;
-    justify-content:space-between;padding:0 24px}
-  nav .brand{font-weight:600;font-size:.95rem;color:var(--ink);text-decoration:none}
-  nav .links a{margin-left:22px;font-size:.88rem;color:var(--ink2);text-decoration:none;transition:color .25s ease}
-  nav .links a:hover{color:var(--ink)}
+  /* nav 毛玻璃導覽列樣式已抽出至 site.css（兩頁共用） */
 
   .hero{text-align:center;padding:30px 0 34px}
   .hero h1{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;letter-spacing:-.02em;margin:0 0 10px;line-height:1.1;
@@ -605,16 +569,16 @@ INFERENCE_HTML = """<!DOCTYPE html>
 <body>
 <nav><div class="inner">
   <a class="brand" href="index.html">26-ai-new-power</a>
-  <span class="links">
-    <a href="index.html">分析總覽</a>
-    <a href="report.html">論文</a>
-    <a href="smell.html">氣味報告</a>
-    <a href="inference.html">互動推論</a>
-  </span>
+  <div class="links">
+    <a class="nav-link" href="index.html">分析總覽</a>
+    <a class="nav-link" href="report.html">論文</a>
+    <a class="nav-link" href="smell.html">氣味報告</a>
+    <a class="nav-link" href="inference.html">互動推論</a>
+  </div><!-- /.links -->
 </div></nav>
 
 <main>
-  <div class="hero">
+  <div class="hero" id="top">
     <h1>互動式推論。</h1>
     <p>模型參數於 Python（scikit-learn，random_state=42）訓練後直接複製到前端，所有推論皆在瀏覽器本地運算，無後端伺服器。</p>
   </div>
@@ -670,6 +634,35 @@ INFERENCE_HTML = """<!DOCTYPE html>
 <script src="app.js"></script>
 </body>
 </html>
+"""
+
+
+SITE_CSS = """/*
+ * site.css — index.html / inference.html 共用的底層樣式（源頭在本檔 build_docs.py，
+ * 各頁專屬樣式仍留在各頁 inline <style>，本檔不放任何單頁專屬規則）。
+ */
+:root{
+  --bg:#f5f5f7; --panel:#ffffff; --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#86868b;
+  --line:#e5e5ea; --blue:#0071e3; --radius:22px;
+  --grad1:#ff6a3d; --grad2:#c155ec; --grad3:#3a7bfd;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
+    "Helvetica Neue","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em}
+/* 毛玻璃導覽列 */
+nav{position:fixed;top:0;left:0;z-index:10;right:0;height:52px;
+  background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.08)}
+nav .inner{height:100%;max-width:1040px;margin:0 auto;display:flex;align-items:center;
+  justify-content:space-between;padding:0 24px}
+nav .brand{color:var(--ink);text-decoration:none;font-size:.95rem;font-weight:600}
+nav .links a{color:var(--ink2);font-size:.88rem;margin-left:22px;text-decoration:none;
+  transition:color .25s ease}
+nav .links a:hover{color:var(--ink)}
 """
 
 
@@ -745,6 +738,9 @@ def main() -> None:
     (DOCS / "index.html").write_text(INDEX_HTML, encoding="utf-8")
     (DOCS / "inference.html").write_text(INFERENCE_HTML, encoding="utf-8")
     print("index.html overview + inference.html (Apple style) written")
+
+    (DOCS / "site.css").write_text(SITE_CSS, encoding="utf-8")
+    print("site.css written: docs/site.css")
 
     print("done")
 
