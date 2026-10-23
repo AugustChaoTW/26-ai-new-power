@@ -1,0 +1,6 @@
+{
+  "$schema": "./node_modules/knip/schema.json",
+  "entry": ["docs/app.js", "docs/trained_params.js", "scripts/run_static_checks.sh"],
+  "ignore": ["node_modules/**", "outputs/**"],
+  "include": ["files", "dependencies", "exports"]
+}

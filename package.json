@@ -1,0 +1,36 @@
+{
+  "name": "26-ai-new-power",
+  "version": "1.0.0",
+  "description": "\u4ee5\u7d93\u5178 Iris \u8cc7\u6599\u96c6\u5b8c\u6210\u8cc7\u6599\u53d6\u5f97\u3001\u63a2\u7d22\u5206\u6790\u3001PCA \u4e09\u7dad\u8996\u89ba\u5316\u3001MLP \u985e\u795e\u7d93\u7db2\u8def\u5206\u985e\uff0c\u4e26\u7522\u51fa\u5c0f\u8ad6\u6587\u3002",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "checks": "bash scripts/run_static_checks.sh",
+    "checks:eslint": "eslint docs/**/*.js scripts/**/*.js scripts/**/*.mjs scripts/**/*.cjs tests/**/*.js tests/**/*.mjs tests/**/*.cjs",
+    "checks:jscpd": "jscpd --min-tokens 50 --reporters json,consoleFull --output outputs/static-checks/jscpd docs scripts tests",
+    "checks:knip": "knip --config knip.json --reporter json --no-exit-code"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AugustChaoTW/26-ai-new-power.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AugustChaoTW/26-ai-new-power/issues"
+  },
+  "homepage": "https://github.com/AugustChaoTW/26-ai-new-power#readme",
+  "devDependencies": {
+    "eslint": "^10.13.0",
+    "eslint-plugin-sonarjs": "^4.2.2",
+    "globals": "^17.13.0",
+    "jscpd": "^5.4.2",
+    "knip": "^6.42.1"
+  }
+}
